@@ -5,8 +5,9 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const redisStore = require("./redis/redisStore");
 const mongoose = require("mongoose");
+const passport = require("./auth/index");
 const indexRouter = require("./routes/index");
-const passport = require("passport");
+require("./auth/index");
 
 //require("./auth/signUpLocal")
 require("dotenv").config();
@@ -28,13 +29,14 @@ app.use(
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 12 * 1000 }
+    cookie: { secure: false, maxAge: 120 * 1000 }
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use("/", indexRouter);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log("server ok");
 });

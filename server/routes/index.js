@@ -1,24 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
-require("../auth/signUpLocal")(passport);
+const passport = require("../auth");
+
 router.get("/signup", (req, res) => {
   res.render("signup");
 });
-router.get("/index", (req, res) => {
-  console.log(req.user);
-
-  res.json(req.user);
-});
-router.post(
-  "/signup",
-  passport.authenticate("local-signup", {
-    successRedirect: "/chat",
-    failureRedirect: "/signup"
-  })
+router.post("/signup", (req, res, next) =>
+  passport.authenticate("local-signup", function(err, user) {
+    if (err) return res.json({ error: err });
+    return res.json(user);
+  })(req, res, next)
 );
-router.get("/chat", (req, res) => {
-  if (req.user) res.json(req.user);
-  else res.redirect("/signup");
+
+router.get("/signin", (req, res) => {
+  res.render("signin");
 });
+router.post("/signin", (req, res, next) =>
+  passport.authenticate("local-signin", function(err, user) {
+    if (err) return res.json({ error: err });
+    return res.json(user);
+  })(req, res, next)
+);
+
 module.exports = router;

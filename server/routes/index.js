@@ -8,7 +8,7 @@ router.get("/signup", (req, res) => {
 router.post("/signup", (req, res, next) =>
   passport.authenticate("local-signup", function(err, user) {
     if (err) return res.json({ error: err });
-    return res.json(user);
+    return res.json({ user });
   })(req, res, next)
 );
 
@@ -18,7 +18,7 @@ router.get("/signin", (req, res) => {
 router.post("/signin", (req, res, next) =>
   passport.authenticate("local-signin", function(err, user) {
     if (err) return res.json({ error: err });
-    return res.json(user);
+    return res.json({ user });
   })(req, res, next)
 );
 

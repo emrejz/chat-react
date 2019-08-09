@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const redisStore = require("./redis/redisStore");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const passport = require("./auth/index");
 const indexRouter = require("./routes/index");
 require("./auth/index");
@@ -12,6 +13,7 @@ require("./auth/index");
 //require("./auth/signUpLocal")
 require("dotenv").config();
 const app = express();
+app.use(cors());
 mongoose.Promise = global.Promise;
 
 mongoose

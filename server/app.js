@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -6,14 +7,12 @@ const cookieParser = require("cookie-parser");
 const redisStore = require("./redis/redisStore");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const passport = require("./auth/index");
+const passport = require("passport");
 const indexRouter = require("./routes/index");
-require("./auth/index");
-
 //require("./auth/signUpLocal")
-require("dotenv").config();
 const app = express();
 app.use(cors());
+
 mongoose.Promise = global.Promise;
 
 mongoose
@@ -31,12 +30,12 @@ app.use(
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 120 * 1000 }
+    cookie: { secure: false, maxAge: 20 * 1000 }
   })
 );
-
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+app.use(passport.session());
+
 app.use("/", indexRouter);
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

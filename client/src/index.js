@@ -4,13 +4,13 @@ import "./stylesheets/index.css";
 import App from "./components/App";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
-import ReduxThunk from "redux-thunk";
+import thunk from "redux-thunk";
 import logger from "redux-logger";
 import promise from "redux-promise-middleware";
 import rootReducer from "./reducers";
 
 const all = compose(
-  applyMiddleware(promise, ReduxThunk, logger),
+  applyMiddleware(thunk, promise, logger),
   window.__REDUX_DEVTOOLS_EXTENSION__
     ? window.__REDUX_DEVTOOLS_EXTENSION__()
     : f => f

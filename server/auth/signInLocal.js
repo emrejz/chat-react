@@ -25,11 +25,11 @@ const signInStrategy = new Strategy(
               req.user = user;
               return done(null, user);
               //} else return done(null, false, { message: "Wrong email." });
-            } else return done("Wrong email.", false);
+            } else return done("Wrong password.", false);
           }
         });
       // } else return done(null, null, { message: "Wrong email." });
-    } else return done("Wrong email.", null);
+    } else return done("Please enter a valid email address.", null);
   }
 );
 module.exports = signInStrategy;

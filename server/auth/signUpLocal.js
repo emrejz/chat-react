@@ -14,7 +14,7 @@ module.exports = new LocalStrategy(
         .lean()
         .exec((err, user) => {
           // if there are any errors, return the error
-          if (err) return done(err, null);
+          if (err) return done("Database error.", null);
 
           // check to see if theres already a user with that email
           if (user) {

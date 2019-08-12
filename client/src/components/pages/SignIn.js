@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { TextField, Button, Container, Grid } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-//import GoogleLogin from "react-google-login";
+import GoogleLogin from "react-google-login";
 import { useDispatch } from "react-redux";
-import { signInAction } from "../../actions/signInAction";
+import {
+  signInActionLocal,
+  signInActionGoogle
+} from "../../actions/signInAction";
 const CssTextField = withStyles({
   root: {
     marginTop: 30,
@@ -46,10 +49,13 @@ const SignIn = props => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
+  const responseGoogle = res => {
+    console.log(res);
+  };
   const onSubmit = e => {
     e.preventDefault();
     console.log("emre");
-    dispatch(signInAction({ email, password }));
+    dispatch(signInActionLocal({ email, password }));
   };
   return (
     <Container>
@@ -80,6 +86,14 @@ const SignIn = props => {
             >
               Primary
             </Button>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+            ,
           </form>
         </Grid>
 

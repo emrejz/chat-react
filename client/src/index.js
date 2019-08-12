@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./stylesheets/index.css";
@@ -8,7 +9,7 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 import promise from "redux-promise-middleware";
 import rootReducer from "./reducers";
-
+dotenv.config();
 const all = compose(
   applyMiddleware(thunk, promise, logger),
   window.__REDUX_DEVTOOLS_EXTENSION__

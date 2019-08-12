@@ -9,6 +9,7 @@ module.exports = new LocalStrategy(
     // passReqToCallback: true // allows us to pass back the entire request to the callback
   },
   function(email, password, done) {
+    email = email.toLowerCase().trim();
     if (emailValid(email)) {
       User.findOne({ email })
         .lean()

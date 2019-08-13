@@ -16,9 +16,10 @@ export const signInActionLocal = data => dispatch => {
   });
 };
 
-export const signInActionGoogle = accessToken => dispatch => {
+export const signInActionGoogle = access_token => dispatch => {
+  console.log(access_token);
   dispatch({
     type: SIGNIN_GOOGLE,
-    payload: axios.post("http://localhost:3001/auth/google", accessToken)
+    payload: axios.post("http://localhost:3001/auth/google", { access_token })
   });
 };

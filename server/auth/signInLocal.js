@@ -1,4 +1,5 @@
 const Strategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
 const User = require("../model/user");
 const emailValid = require("../validator/emailValid");
 
@@ -20,12 +21,15 @@ const signInStrategy = new Strategy(
           if (!user) return done("Wrong email.", false);
           //if (!user) return done(null, false, { message: "Wrong email." });
           if (user) {
-            if (password === user.password) {
-              delete user.password;
-              req.user = user;
-              return done(null, user);
-              //} else return done(null, false, { message: "Wrong email." });
-            } else return done("Wrong password.", false);
+            bcrypt.compare(password, user.password, function(err, isMatch) {
+              if (err) return done("Bcrypt error:" + err, false);
+              if (isMatch) {
+                delete user.password;
+                req.user = user;
+                return done(null, user);
+                //} else return done(null, false, { message: "Wrong email." });
+              } else return done("Wrong password.", false);
+            });
           }
         });
       // } else return done(null, null, { message: "Wrong email." });

@@ -51,7 +51,7 @@ router.get("/deneme", (req, res, next) => {
 
   //res.json({ user: req.user, error: req.error });
 });
-router.get("/auth/google", (req, res, next) =>
+router.post("/auth/google", (req, res, next) =>
   passport.authenticate("google-plus-token", (error, user, info) => {
     if (user)
       req.login(user, function(err) {

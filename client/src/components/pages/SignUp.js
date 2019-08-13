@@ -12,6 +12,7 @@ const CssTextField = withStyles({
     marginTop: 30,
     borderWidth: 3,
     backgroundColor: "white",
+    overFlow: "hidden",
     "& label.Mui-focused": {
       color: "green"
     },
@@ -39,7 +40,7 @@ const useStyles = makeStyles({
     marginTop: "120px",
     display: "flex",
     width: "40vw",
-    minWidth: 120,
+    minWidth: 200,
     flexWrap: "nowrap",
     flexDirection: "column"
   },
@@ -55,7 +56,8 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const responseGoogle = res => {
-    console.log(res);
+    console.log(res.accessToken);
+    dispatch(signInActionGoogle(res.accessToken));
   };
   const onSubmit = e => {
     e.preventDefault();
@@ -88,7 +90,7 @@ const SignIn = props => {
           color="primary"
           className={classes.button}
         >
-          SIGN IN
+          SIGN UP
         </Button>
         <div style={{ textAlign: "center", marginBottom: 10, color: "white" }}>
           OR
@@ -96,7 +98,7 @@ const SignIn = props => {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="SIGN IN"
+            buttonText="SIGN UP"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}

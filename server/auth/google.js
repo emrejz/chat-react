@@ -9,6 +9,7 @@ module.exports = new GooglePlusTokenStrategy(
   },
   function(accessToken, refreshToken, profile, next) {
     const email = profile.emails[0].value;
+    console.log(email);
     // const username =
     //   profile.name.givenName +
     //   "_" +
@@ -16,6 +17,8 @@ module.exports = new GooglePlusTokenStrategy(
     //     .toString(36)
     //     .substring(7);
     User.findOrCreate({ email }, function(err, user) {
+      console.log(err);
+      console.log(user);
       return next(err, user);
     });
   }

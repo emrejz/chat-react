@@ -6,38 +6,3 @@ body {
   background-size: 100vw 70vh;
   background-position-y: 125px;
 }
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  body {
-    background-image: url("https://source.unsplash.com/random/400x600?chat");
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  body {
-    background-image: url("https://source.unsplash.com/random/600x600?chat");
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  body {
-    background-image: url("https://source.unsplash.com/random/768x600?chat");
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  body {
-    background-image: url("https://source.unsplash.com/random/992x600?chat");
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  body {
-    background-image: url("https://source.unsplash.com/random/1200x600?chat");
-  }
-}

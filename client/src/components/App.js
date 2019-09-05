@@ -4,7 +4,7 @@ import Header from "./Header.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Chat from "./pages/Chat";
+import Chat from "./pages/chat";
 
 const Root = () => (
   <BrowserRouter>

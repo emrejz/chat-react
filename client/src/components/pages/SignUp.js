@@ -42,8 +42,11 @@ const useStyles = makeStyles({
     flexDirection: "column"
   },
   button: {
-    margin: "20px",
-    marginBottom: "10px"
+    marginTop: 10,
+    marginBottom: 10,
+    width: 200,
+    fontSize: 16,
+    alignSelf: "center"
   }
 });
 
@@ -89,7 +92,12 @@ const SignIn = props => {
           OR
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <a href="http://localhost:3001/auth/google">Google</a>
+          <a
+            className={"googleButton"}
+            href="http://localhost:3001/auth/google"
+          >
+            GOOGLE
+          </a>
         </div>
       </form>
     </Container>

@@ -1,18 +1,19 @@
 require("dotenv").config();
+const http = require("http");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const redisStore = require("./redis/redisStore");
+const RedisStore = require("./redis/redisStore");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 const indexRouter = require("./routes/index");
+const socket = require("./socket/socket");
 //require("./auth/signUpLocal")
 const app = express();
 app.use(cors());
-
 mongoose.Promise = global.Promise;
 
 mongoose
@@ -26,11 +27,18 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
   session({
-    store: redisStore,
+    key: "connect.sid",
+    store: RedisStore,
+
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 20 * 1000 }
+    cookie: {
+      secure: false,
+      httpOnly: false,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: false
+    }
   })
 );
 app.use(passport.initialize());
@@ -38,6 +46,9 @@ app.use(passport.session());
 
 app.use("/", indexRouter);
 const port = process.env.PORT || 3001;
-app.listen(port, () => {
+const server = http.createServer(app);
+
+server.listen(port, () => {
   console.log("server ok");
+  socket(server);
 });

@@ -5,10 +5,10 @@ module.exports = new LocalStrategy(
   {
     // by default, local strategy uses username and password, we will override with email
     usernameField: "email",
-    passwordField: "password"
-    // passReqToCallback: true // allows us to pass back the entire request to the callback
+    passwordField: "password",
+    passReqToCallback: true // allows us to pass back the entire request to the callback
   },
-  function(email, password, done) {
+  function(req, email, password, done) {
     email = email.toLowerCase().trim();
     if (emailValid(email)) {
       User.findOne({ email })
@@ -29,6 +29,8 @@ module.exports = new LocalStrategy(
                 .save()
                 .then(user => {
                   delete user._doc.password;
+                  req.user = user;
+                  console.log("req.user", req.user);
                   return done(null, user);
                 })
                 .catch(err => done(err, null));

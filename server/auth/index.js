@@ -8,10 +8,12 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  done(null, user);
+  User.findById(user._id, function(err, user) {
+    done(err, user);
+  });
 });
-passport.use("local-signup", signUpStrategy);
+passport.use("local", signUpStrategy);
 passport.use("local-signin", signInStrategy);
-passport.use("google-plus-token", googleStrategy);
+passport.use("google", googleStrategy);
 
 module.exports = passport;

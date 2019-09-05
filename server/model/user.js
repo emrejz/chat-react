@@ -4,7 +4,8 @@ const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
 const User = new Schma({
   email: String,
-  // username: { type: String, unique: true },
+  username: { type: String, unique: false, minlength: 3, maxlength: 20 },
+  picture: String,
   password: String,
   createdAt: { type: Date, default: Date.now }
 });

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { TextField, Button, Container, Grid } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-import GoogleLogin from "react-google-login";
+
 import { useDispatch } from "react-redux";
-import {
-  signInActionLocal,
-  signInActionGoogle
-} from "../../actions/signInAction";
+import { signUpActionLocal } from "../../actions/signAction";
 const CssTextField = withStyles({
   root: {
     marginTop: 30,
@@ -55,14 +52,10 @@ const SignIn = props => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
-  const responseGoogle = res => {
-    console.log(res.accessToken);
-    dispatch(signInActionGoogle(res.accessToken));
-  };
+
   const onSubmit = e => {
     e.preventDefault();
-    console.log("emre");
-    dispatch(signInActionLocal({ email, password }));
+    dispatch(signUpActionLocal({ email, password }));
   };
   return (
     <Container maxWidth="sm">
@@ -96,13 +89,7 @@ const SignIn = props => {
           OR
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="SIGN UP"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
+          <a href="http://localhost:3001/auth/google">Google</a>
         </div>
       </form>
     </Container>

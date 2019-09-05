@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import io from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { signedUser } from "../../../actions/signAction";
 import ChatContent from "./ChatContent";
 const Chat = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState(null);
   const socket = io("http://localhost:3001/");
   useEffect(() => {
@@ -12,6 +16,7 @@ const Chat = ({ history }) => {
         history.push("/signup");
       } else if (data._id) {
         setUser(data);
+        dispatch(signedUser(data));
       }
     });
   }, []);

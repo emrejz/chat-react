@@ -1,5 +1,6 @@
 import React from "react";
 import InputMessage from "./InputMessage";
+import ChatPanel from "./ChatPanel";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, TextField, Button } from "@material-ui/core/";
 
@@ -7,9 +8,11 @@ export default function RightPaper() {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
-      <Paper className={classes.namePanel}>Room name</Paper>
-      <Paper className={classes.chatPanel}>window</Paper>
-      <InputMessage inputPanel={classes.inputPanel}></InputMessage>
+      <div className={classes.namePanel}>Room name</div>
+      <Paper className={classes.chatPanel}>
+        <ChatPanel />
+      </Paper>
+      <InputMessage></InputMessage>
     </Paper>
   );
 }
@@ -31,9 +34,5 @@ const useStyles = makeStyles(theme => ({
   },
   chatPanel: {
     height: "60vh"
-  },
-  inputPanel: {
-    marginTop: 16,
-    height: "14vh"
   }
 }));

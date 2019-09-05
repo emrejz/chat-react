@@ -9,6 +9,7 @@ export const SIGNUP_LOCAL_REJECTED = "SIGNUP_LOCAL_REJECTED";
 
 const SIGNIN_LOCAL = "SIGNIN_LOCAL";
 const SIGNUP_LOCAL = "SIGNUP_LOCAL";
+const SIGNED_USER = "SIGNED_USER";
 export const signInActionLocal = data => dispatch => {
   dispatch({
     type: SIGNIN_LOCAL,
@@ -22,3 +23,7 @@ export const signUpActionLocal = data => dispatch => {
     payload: axios.post("http://localhost:3001/signup", data)
   });
 };
+export const signedUser = data => ({
+  type: SIGNED_USER,
+  payload: data
+});

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20
   }
 }));
-export default function ChatContent() {
+export default function ChatContent({ user }) {
   const classes = useStyles();
 
   return (

@@ -1,13 +1,16 @@
 import React from "react";
+import InputMessage from "./InputMessage";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container } from "@material-ui/core/";
+import { Paper, Grid, Container, TextField, Button } from "@material-ui/core/";
 
 export default function RightPaper() {
   const classes = useStyles();
   return (
-    <div>
-      <Paper className={classes.paper}>as</Paper>
-    </div>
+    <Paper className={classes.paper}>
+      <Paper className={classes.namePanel}>Room name</Paper>
+      <Paper className={classes.chatPanel}>window</Paper>
+      <InputMessage inputPanel={classes.inputPanel}></InputMessage>
+    </Paper>
   );
 }
 const useStyles = makeStyles(theme => ({
@@ -17,10 +20,20 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: 10,
     textAlign: "center",
     color: theme.palette.text.secondary,
-    backgroundColor: "gray",
+    backgroundColor: "white",
     height: "80vh"
+  },
+  namePanel: {
+    height: "8vh"
+  },
+  chatPanel: {
+    height: "60vh"
+  },
+  inputPanel: {
+    marginTop: 16,
+    height: "14vh"
   }
 }));

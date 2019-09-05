@@ -81,7 +81,7 @@ export default function LeftPaper() {
 }
 const useStyles = makeStyles(theme => ({
   paper: {
-    padding: theme.spacing(2),
+    padding: 10,
     textAlign: "center",
     color: theme.palette.text.secondary,
     borderRight: "1px solid black",

@@ -2,6 +2,7 @@ const socket = require("socket.io");
 const redisAdapter = require("socket.io-redis");
 const socketAuth = require("../auth/socket");
 const Rooms = require("../redis/lib/Rooms");
+const Users = require("../redis/lib/Users");
 module.exports = server => {
   const io = socket.listen(server);
   let roomList = [];
@@ -19,6 +20,10 @@ module.exports = server => {
       io.emit("firstConnect", rooms);
       roomList = rooms;
     });
+    Users.upsert(socket.request.user);
+    Users.getList(users => {
+      io.emit("onlineList", users);
+    });
 
     socket.emit("userInfo", socket.request.user);
     socket.on("addRoom", roomName => {
@@ -31,6 +36,10 @@ module.exports = server => {
         }
       }
     });
-    socket.on("newUser", user => console.log(user));
+    socket.on("newUser", user => console.log("a"));
+    socket.on("disconnect", () => {
+      Users.remove(socket.request.user);
+      Users.getList(users => io.emit("onlineList", users));
+    });
   });
 };

@@ -18,10 +18,16 @@ export default function LeftPaper({ socketData }) {
   const classes = useStyles();
   const [tabID, setTabID] = React.useState(0);
   const [roomList, setRoomList] = React.useState([]);
+  const [onlineList, setOnlineList] = React.useState([]);
   useEffect(() => {
-    socketData.data.socket.on("firstConnect", data => setRoomList(data));
-    socketData.data.socket.on("newRoom", data => {
+    const { socket } = socketData.data;
+    socket.on("firstConnect", data => setRoomList(data));
+    socket.on("newRoom", data => {
       setRoomList(data);
+    });
+    socket.on("onlineList", users => {
+      console.log(users);
+      setOnlineList(users);
     });
   }, []);
   const addRoom = () => {
@@ -55,23 +61,24 @@ export default function LeftPaper({ socketData }) {
         <div className={classes.root}>
           {tabID === 0 ? (
             <React.Fragment>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://material-ui.com/static/images/avatar/1.jpg"
-                  />
-                </ListItemAvatar>
+              {onlineList.map(item => (
+                <React.Fragment>
+                  <ListItem button>
+                    <ListItemAvatar>
+                      <Avatar alt={item.username} src={item.picture} />
+                    </ListItemAvatar>
 
-                <div>asd asda adadas a afafaf aaaf</div>
-              </ListItem>
-              <Divider variant="fullWidth" />
+                    <div>{item.username}</div>
+                  </ListItem>
+                  <Divider variant="fullWidth" />
+                </React.Fragment>
+              ))}
             </React.Fragment>
           ) : (
             <React.Fragment>
               {roomList.map(item => (
                 <React.Fragment>
-                  <ListItem button>
+                  <ListItem button onClick={() => alert(item.name)}>
                     <div>{item.name}</div>
                   </ListItem>
                   <Divider variant="fullWidth" />

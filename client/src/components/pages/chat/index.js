@@ -10,16 +10,17 @@ const Chat = ({ history }) => {
   const [user, setUser] = useState(null);
   const socket = io("http://localhost:3001/");
   useEffect(() => {
-    socket.emit("userLogin");
-    socket.on("a", data => {
+    socket.on("userInfo", data => {
       if (data.logged_in === false) {
         history.push("/signup");
       } else if (data._id) {
         setUser(data);
-        dispatch(signedUser(data));
+        dispatch(signedUser({ user: data, socket }));
+        socket.emit("newUser", data);
       }
     });
   }, []);
+
   const ChatPage = () => {
     if (user) return <ChatContent />;
     else return <div></div>;

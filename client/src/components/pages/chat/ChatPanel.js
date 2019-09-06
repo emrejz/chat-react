@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import {
   ListItem,
   Avatar,
@@ -8,10 +7,8 @@ import {
   makeStyles,
   ListItemText
 } from "@material-ui/core/";
-export default function ChatPanel() {
+export default function ChatPanel({ socketData }) {
   const classes = useStyles();
-  const user = useSelector(state => state.signedUserReducer);
-
   const data = [
     {
       username: "Emre_49wtup",
@@ -72,60 +69,55 @@ export default function ChatPanel() {
   ];
   return (
     <div className={classes.container}>
-      {user &&
-        user.user &&
-        data.map(item => {
-          return item.username !== user.user.username ? (
-            <ListItem
-              className={classes.strangerMessage}
-              alignItems="flex-start"
-            >
-              <ListItemAvatar>
-                <Avatar alt="avatar" src={item.picture} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={item.username}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      {item.message}
-                    </Typography>
-                  </React.Fragment>
-                }
+      {data.map(item => {
+        return item.username !== socketData.data.user.username ? (
+          <ListItem className={classes.strangerMessage} alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="avatar" src={item.picture} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={item.username}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {item.message}
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+        ) : (
+          <ListItem className={classes.myMessage} alignItems="flex-start">
+            <ListItemText
+              primary={item.username}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {item.message}
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <ListItemAvatar>
+              <Avatar
+                alt={"avatar"}
+                src={item.picture}
+                style={{ margin: 0, marginLeft: 16 }}
               />
-            </ListItem>
-          ) : (
-            <ListItem className={classes.myMessage} alignItems="flex-start">
-              <ListItemText
-                primary={item.username}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      {item.message}
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-              <ListItemAvatar c>
-                <Avatar
-                  alt={"avatar"}
-                  src={item.picture}
-                  style={{ margin: 0, marginLeft: 16 }}
-                />
-              </ListItemAvatar>
-            </ListItem>
-          );
-        })}
+            </ListItemAvatar>
+          </ListItem>
+        );
+      })}
     </div>
   );
 }

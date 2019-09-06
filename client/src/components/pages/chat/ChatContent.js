@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Container } from "@material-ui/core/";
 import LeftPaper from "./LeftPaper";
 import RightPaper from "./RightPaper";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,19 +14,24 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function ChatContent({ user }) {
   const classes = useStyles();
+  const socketData = useSelector(state => state.signedUserReducer);
 
   return (
-    <Container maxWidth="lg">
-      <div className={classes.root}>
-        <Grid container={true}>
-          <Grid item xs={3}>
-            <LeftPaper />
-          </Grid>
-          <Grid item xs={9}>
-            <RightPaper />
-          </Grid>
-        </Grid>
-      </div>
-    </Container>
+    <div>
+      {socketData && socketData.data && (
+        <Container maxWidth="lg">
+          <div className={classes.root}>
+            <Grid container={true}>
+              <Grid item xs={3}>
+                <LeftPaper socketData={socketData} />
+              </Grid>
+              <Grid item xs={9}>
+                <RightPaper socketData={socketData} />
+              </Grid>
+            </Grid>
+          </div>
+        </Container>
+      )}
+    </div>
   );
 }

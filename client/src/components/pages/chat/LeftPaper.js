@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Paper,
@@ -14,10 +14,25 @@ import {
   Tab
 } from "@material-ui/core/";
 
-export default function LeftPaper() {
+export default function LeftPaper({ socketData }) {
   const classes = useStyles();
   const [tabID, setTabID] = React.useState(0);
-
+  const [roomList, setRoomList] = React.useState([]);
+  useEffect(() => {
+    socketData.data.socket.on("firstConnect", data => setRoomList(data));
+    socketData.data.socket.on("newRoom", data => {
+      setRoomList(data);
+    });
+  }, []);
+  const addRoom = () => {
+    let roomName = prompt("Enter room name.");
+    if (roomName) {
+      roomName = roomName.trim();
+      if (roomName.length !== 0) {
+        socketData.data.socket.emit("addRoom", roomName);
+      }
+    }
+  };
   return (
     <div>
       <Paper className={classes.paper}>
@@ -54,23 +69,20 @@ export default function LeftPaper() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://material-ui.com/static/images/avatar/1.jpg"
-                  />
-                </ListItemAvatar>
-
-                <div>asd asda adadas a afafaf aaaf</div>
-              </ListItem>
-              <Divider variant="fullWidth" />
+              {roomList.map(item => (
+                <React.Fragment>
+                  <ListItem button>
+                    <div>{item.name}</div>
+                  </ListItem>
+                  <Divider variant="fullWidth" />
+                </React.Fragment>
+              ))}
             </React.Fragment>
           )}
         </div>
         <Button
           className={classes.addRoomBtn}
-          onClick={() => alert("asd")}
+          onClick={() => addRoom()}
           variant="outlined"
         >
           Add Room
@@ -81,6 +93,7 @@ export default function LeftPaper() {
 }
 const useStyles = makeStyles(theme => ({
   paper: {
+    position: "relative",
     padding: 10,
     textAlign: "center",
     color: theme.palette.text.secondary,
@@ -91,7 +104,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     overflowY: "auto",
     width: "100%",
-    height: "66vh",
+    height: "63vh",
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper
   },
@@ -99,11 +112,10 @@ const useStyles = makeStyles(theme => ({
     margin: 4
   },
   addRoomBtn: {
-    postion: "absolute",
+    position: "absolute ",
     bottom: "10px",
-    left: 0,
+    left: "55px",
     color: "green",
-    borderColor: "green",
-    margin: "auto"
+    borderColor: "green"
   }
 }));

@@ -1,7 +1,7 @@
 const initState = {
-  user: {}
+  data: {}
 };
 const signedUserReducer = (state = initState, { payload }) => {
-  return { ...state, user: payload };
+  return { ...state, data: payload };
 };
 export default signedUserReducer;

@@ -4,13 +4,13 @@ import ChatPanel from "./ChatPanel";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, TextField, Button } from "@material-ui/core/";
 
-export default function RightPaper() {
+export default function RightPaper({ socketData }) {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
       <div className={classes.namePanel}>Room name</div>
       <Paper className={classes.chatPanel}>
-        <ChatPanel />
+        <ChatPanel socketData={socketData} />
       </Paper>
       <InputMessage></InputMessage>
     </Paper>

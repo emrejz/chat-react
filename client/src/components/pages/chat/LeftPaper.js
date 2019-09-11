@@ -1,43 +1,36 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Paper,
-  Grid,
-  Container,
   Button,
-  ListItemText,
   ListItem,
   ListItemAvatar,
   Avatar,
-  Divider,
-  Tabs,
-  Tab
+  Divider
 } from "@material-ui/core/";
+import { useSelector, useDispatch } from "react-redux";
+import { selectedRoom } from "../../../actions/socketAction";
 
-export default function LeftPaper({ socketData }) {
+export default function LeftPaper() {
   const classes = useStyles();
   const [tabID, setTabID] = React.useState(0);
-  const [roomList, setRoomList] = React.useState([]);
-  const [onlineList, setOnlineList] = React.useState([]);
-  useEffect(() => {
-    const { socket } = socketData.data;
-    socket.on("firstConnect", data => setRoomList(data));
-    socket.on("newRoom", data => {
-      setRoomList(data);
-    });
-    socket.on("onlineList", users => {
-      console.log(users);
-      setOnlineList(users);
-    });
-  }, []);
-  const addRoom = () => {
+  const dispatch = useDispatch();
+  const { roomList, onlineList, socket } = useSelector(
+    state => state.socketReducer
+  );
+
+  const addRoomButton = () => {
     let roomName = prompt("Enter room name.");
     if (roomName) {
       roomName = roomName.trim();
       if (roomName.length !== 0) {
-        socketData.data.socket.emit("addRoom", roomName);
+        socket.emit("addRoom", roomName);
       }
     }
+  };
+  const selectRoomButton = name => {
+    dispatch(selectedRoom(name));
+    socket.emit("roomMessages", name);
   };
   return (
     <div>
@@ -62,7 +55,7 @@ export default function LeftPaper({ socketData }) {
           {tabID === 0 ? (
             <React.Fragment>
               {onlineList.map(item => (
-                <React.Fragment>
+                <React.Fragment key={item.username}>
                   <ListItem button>
                     <ListItemAvatar>
                       <Avatar alt={item.username} src={item.picture} />
@@ -77,8 +70,8 @@ export default function LeftPaper({ socketData }) {
           ) : (
             <React.Fragment>
               {roomList.map(item => (
-                <React.Fragment>
-                  <ListItem button onClick={() => alert(item.name)}>
+                <React.Fragment key={item.name}>
+                  <ListItem button onClick={() => selectRoomButton(item.name)}>
                     <div>{item.name}</div>
                   </ListItem>
                   <Divider variant="fullWidth" />
@@ -89,7 +82,7 @@ export default function LeftPaper({ socketData }) {
         </div>
         <Button
           className={classes.addRoomBtn}
-          onClick={() => addRoom()}
+          onClick={() => addRoomButton()}
           variant="outlined"
         >
           Add Room

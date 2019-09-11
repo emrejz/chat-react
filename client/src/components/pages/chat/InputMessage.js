@@ -2,12 +2,23 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, TextField, Button } from "@material-ui/core/";
 
-const InputMessage = () => {
+import { sendMessage } from "../../../actions/socketAction";
+const InputMessage = ({ newMessage }) => {
   const classes = useStyles();
+  const [text, setText] = React.useState("");
 
   return (
-    <div className={classes.inputPanel}>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        newMessage(text);
+        setText("");
+      }}
+      className={classes.inputPanel}
+    >
       <TextField
+        value={text}
+        onChange={e => setText(e.target.value.trim())}
         id="outlined-full-width"
         label="Your Message"
         placeholder="placeholder"
@@ -21,7 +32,7 @@ const InputMessage = () => {
           shrink: true
         }}
       />
-    </div>
+    </form>
   );
 };
 

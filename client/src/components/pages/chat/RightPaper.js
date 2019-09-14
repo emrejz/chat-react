@@ -5,20 +5,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { Paper } from "@material-ui/core/";
 
-export default function RightPaper({ newMessage }) {
+export default function RightPaper() {
   const classes = useStyles();
-  const { selectedRoom, getRoomMessages } = useSelector(
-    state => state.socketReducer
-  );
+  const { selectedRoom } = useSelector(state => state.socketReducer);
   return (
     <Paper className={classes.paper}>
       <div className={classes.namePanel}>
         {selectedRoom ? selectedRoom : "No selected room!"}
       </div>
       <Paper className={classes.chatPanel}>
-        <ChatPanel getRoomMessages={getRoomMessages} />
+        <ChatPanel />
       </Paper>
-      <InputMessage newMessage={newMessage}></InputMessage>
+      <InputMessage></InputMessage>
     </Paper>
   );
 }

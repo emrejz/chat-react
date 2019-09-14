@@ -15,7 +15,7 @@ export default function LeftPaper() {
   const classes = useStyles();
   const [tabID, setTabID] = React.useState(0);
   const dispatch = useDispatch();
-  const { roomList, onlineList, socket } = useSelector(
+  const { messageList, roomList, onlineList, socket } = useSelector(
     state => state.socketReducer
   );
 
@@ -30,7 +30,9 @@ export default function LeftPaper() {
   };
   const selectRoomButton = name => {
     dispatch(selectedRoom(name));
-    socket.emit("roomMessages", name);
+    if (!messageList.hasOwnProperty(name)) {
+      socket.emit("roomMessages", name);
+    }
   };
   return (
     <div>

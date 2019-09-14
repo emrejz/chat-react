@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20
   }
 }));
-export default function ChatContent({ getRoomMessages, newMessage }) {
+export default function ChatContent() {
   const classes = useStyles();
 
   return (
@@ -20,10 +20,10 @@ export default function ChatContent({ getRoomMessages, newMessage }) {
         <div className={classes.root}>
           <Grid container={true}>
             <Grid item xs={3}>
-              <LeftPaper getRoomMessages={getRoomMessages} />
+              <LeftPaper />
             </Grid>
             <Grid item xs={9}>
-              <RightPaper newMessage={newMessage} />
+              <RightPaper />
             </Grid>
           </Grid>
         </div>

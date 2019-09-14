@@ -32,6 +32,7 @@ Messages.prototype.getList = function(roomName, cb) {
     for (let message in messages) {
       messageList.push(JSON.parse(messages[message]));
     }
+    messageList.reverse();
     return cb(messageList);
   });
 };

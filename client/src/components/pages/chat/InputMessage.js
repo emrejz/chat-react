@@ -1,17 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container, TextField, Button } from "@material-ui/core/";
-
+import { TextField } from "@material-ui/core/";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../../../actions/socketAction";
-const InputMessage = ({ newMessage }) => {
+const InputMessage = () => {
   const classes = useStyles();
   const [text, setText] = React.useState("");
+  const dispatch = useDispatch();
+  const { socket } = useSelector(state => state.socketReducer);
 
   return (
     <form
       onSubmit={e => {
         e.preventDefault();
-        newMessage(text);
+        socket.emit("newMessage", text);
         setText("");
       }}
       className={classes.inputPanel}

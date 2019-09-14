@@ -1,7 +1,7 @@
 const initState = {
   user: null,
   onlineList: [],
-  messageList: [],
+  messageList: {},
   roomList: [],
   sendMesage: null,
   selectedRoom: null,
@@ -15,6 +15,8 @@ const socketReducer = (state = initState, { type, payload }) => {
       return { ...state, onlineList: payload };
     case "messageList":
       return { ...state, messageList: payload };
+    case "newMessage":
+      return {};
     case "roomList":
       return { ...state, roomList: payload };
     case "selectedRoom":

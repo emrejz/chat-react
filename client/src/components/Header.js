@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Button, IconButton } from "@material-ui/core";
+import { AppBar, Toolbar, Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-
-import MenuIcon from "@material-ui/icons/Menu";
+import { getUser } from "../actions/socketAction";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,32 +21,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = props => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const { user } = useSelector(state => state.socketReducer);
   const signIn = () => {
     props.history.push("/signin");
   };
   const signUp = () => {
     props.history.push("/signup");
   };
+  const signOut = () => {
+    document.cookie = "connect.sid" + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    dispatch(getUser(""));
+    props.history.push("/signin");
+  };
 
   return (
     <AppBar className={classes.root} position="static">
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
         <div className={classes.title}>
-          <Button onClick={() => signIn()} color="inherit">
-            SIGN IN
-          </Button>
-          <Button onClick={() => signUp()} color="inherit">
-            SIGN UP
-          </Button>
+          {!user ? (
+            <React.Fragment>
+              <Button onClick={() => signIn()} color="inherit">
+                SIGN IN
+              </Button>
+              <Button onClick={() => signUp()} color="inherit">
+                SIGN UP
+              </Button>
+            </React.Fragment>
+          ) : (
+            <Button onClick={() => signOut()} color="inherit">
+              SIGN OUT
+            </Button>
+          )}
         </div>
       </Toolbar>
     </AppBar>

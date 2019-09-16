@@ -111,13 +111,17 @@ const useStyles = makeStyles(theme => ({
   container: {
     height: "60vh",
     backgroundColor: "#fbf9ed",
-    overflowY: "auto"
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    flex: 1
   },
   strangerMessage: {
+    flex: 1,
     float: "left",
-    maxWidth: "88%",
+    //   maxWidth: "88%",
     color: "white",
-    backgroundColor: "#f76699",
+    backgroundColor: "#0cdc4c",
     borderRadius: 8,
     marginBottom: 10,
     marginLeft: 4

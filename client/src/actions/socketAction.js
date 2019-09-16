@@ -28,12 +28,7 @@ export const selectedRoom = room => {
     payload: room
   };
 };
-export const sendMessage = message => {
-  return {
-    type: "sendMessage",
-    payload: message
-  };
-};
+
 export const setSocket = socket => {
   return {
     type: "setSocket",

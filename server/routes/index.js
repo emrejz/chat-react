@@ -12,9 +12,7 @@ router.post("/signup", function(req, res, next) {
       if (err) {
         return res.json(err);
       }
-      console.log(user);
-      console.log(req.isAuthenticated());
-      console.log(req.user);
+
       return res.json(user);
     });
   })(req, res, next);
@@ -40,7 +38,7 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/auth/google" }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect("http://localhost:3000/chat");
+    res.redirect(process.env.CLIENT_URL);
   }
 );
 module.exports = router;

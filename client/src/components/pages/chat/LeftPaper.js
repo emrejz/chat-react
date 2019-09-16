@@ -53,6 +53,7 @@ export default function LeftPaper() {
         >
           Rooms
         </Button>
+
         <div className={classes.root}>
           {tabID === 0 ? (
             <React.Fragment>
@@ -62,9 +63,9 @@ export default function LeftPaper() {
                     <ListItemAvatar>
                       <Avatar alt={item.username} src={item.picture} />
                     </ListItemAvatar>
-
                     <div>{item.username}</div>
                   </ListItem>
+
                   <Divider variant="fullWidth" />
                 </React.Fragment>
               ))}
@@ -82,13 +83,15 @@ export default function LeftPaper() {
             </React.Fragment>
           )}
         </div>
-        <Button
-          className={classes.addRoomBtn}
-          onClick={() => addRoomButton()}
-          variant="outlined"
-        >
-          Add Room
-        </Button>
+        <div className={classes.addRoomBtnCont}>
+          <Button
+            className={classes.addRoomBtn}
+            onClick={() => addRoomButton()}
+            variant="outlined"
+          >
+            Add Room
+          </Button>
+        </div>
       </Paper>
     </div>
   );
@@ -99,25 +102,31 @@ const useStyles = makeStyles(theme => ({
     padding: 10,
     textAlign: "center",
     color: theme.palette.text.secondary,
-    borderRight: "1px solid black",
+    borderRight: "1px solid grey",
     height: "80vh"
   },
   root: {
     marginTop: 20,
     overflowY: "auto",
+    overflowX: "hidden",
     width: "100%",
     height: "63vh",
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper
   },
   buttons: {
-    margin: 4
+    margin: 4,
+    padding: 2
   },
   addRoomBtn: {
+    color: "green",
+    padding: 2,
+    marginRight: 10,
+    borderColor: "green"
+  },
+  addRoomBtnCont: {
     position: "absolute ",
     bottom: "10px",
-    left: "55px",
-    color: "green",
-    borderColor: "green"
+    width: "90%"
   }
 }));

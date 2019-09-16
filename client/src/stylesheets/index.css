@@ -6,3 +6,6 @@ body {
   background-size: 100vw 70vh;
   background-position-y: 125px;
 }
+.MuiListItemText-primary {
+  font-weight: 600 !important;
+}

@@ -18,10 +18,9 @@ module.exports = server => {
   );
 
   io.on("connection", socket => {
-    const msgList = {};
-    let user = null;
-    let roomName = null;
     if (socket.request.user.username) {
+      let user = null;
+
       Rooms.getList(rooms => {
         io.emit("roomList", rooms);
         roomList = rooms;
@@ -46,26 +45,27 @@ module.exports = server => {
 
       socket.on("roomMessages", room => {
         socket.join(room);
-        roomName = room;
         Messages.getList(room, messages => {
+          let msgList = {};
           msgList[room] = messages;
 
           socket.emit("roomMesasges", msgList);
         });
       });
-      socket.on("newMessage", message => {
+      socket.on("newMessage", data => {
+        const { message, selectedRoom } = data;
         const msgData = {
           message,
-          roomName,
+          roomName: selectedRoom,
           user: { username: user.username, picture: user.picture }
         };
+
         Messages.upsert(msgData);
-        io.to(roomName).emit("newMessage", msgData);
+        io.to(selectedRoom).emit("newMessage", msgData);
       });
 
       socket.on("newUser", newUser => (user = newUser));
       socket.on("disconnect", () => {
-        console.log("disconnect");
         Users.remove(socket.request.user);
         Users.getList(users => io.emit("onlineList", users));
       });

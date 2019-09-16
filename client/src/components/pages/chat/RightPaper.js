@@ -11,7 +11,9 @@ export default function RightPaper() {
   return (
     <Paper className={classes.paper}>
       <div className={classes.namePanel}>
-        {selectedRoom ? selectedRoom : "No selected room!"}
+        {selectedRoom
+          ? "Chat room name is " + selectedRoom
+          : "No selected room!"}
       </div>
       <Paper className={classes.chatPanel}>
         <ChatPanel />
@@ -34,7 +36,9 @@ const useStyles = makeStyles(theme => ({
     height: "80vh"
   },
   namePanel: {
-    height: "8vh"
+    height: "8vh",
+    fontSize: 22,
+    fontWeight: "600"
   },
   chatPanel: {
     height: "60vh"

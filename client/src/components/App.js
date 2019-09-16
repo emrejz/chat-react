@@ -13,7 +13,7 @@ const Root = () => (
       <Switch>
         <Route path="/signin" render={() => <SignIn />} />
         <Route path="/signup" render={() => <SignUp />} />
-        <Route path="/chat" render={() => <Chat />} />
+        <Route path="/" render={() => <Chat />} />
       </Switch>
     </Fragment>
   </BrowserRouter>

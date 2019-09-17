@@ -12,9 +12,9 @@ module.exports = server => {
   io.adapter(
     redisAdapter({
       //  url: process.env.REDISCLOUD_GRAY_URL
-      host: process.env.REDISCLOUD_GRAY_HOST,
-      port: process.env.REDISCLOUD_GRAY_PORT,
-      auth_pass: process.env.REDISCLOUD_GRAY_PASS
+      host: process.env.REDISCLOUD_HOST,
+      port: process.env.REDISCLOUD_PORT,
+      auth_pass: process.env.REDISCLOUD_PASS
     })
   );
 

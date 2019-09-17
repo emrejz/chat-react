@@ -34,6 +34,12 @@ module.exports = server => {
 
       socket.emit("userInfo", socket.request.user);
       socket.on("addRoom", roomName => {
+        if (roomList.length == 0) {
+          Rooms.upsert(roomName);
+          Rooms.getList(rooms => {
+            io.emit("newRoom", rooms);
+          });
+        }
         for (let room of roomList) {
           if (room.name !== roomName) {
             Rooms.upsert(roomName);

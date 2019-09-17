@@ -11,8 +11,8 @@ module.exports = new RedisStore({
   // //serializer: true,
   // unset: "destroy"
   secret: process.env.SECRET_KEY,
-  url: process.env.REDISCLOUD_GRAY_URL
-  // host: process.env.REDIS_CLOUD_HOST,
-  // port: process.env.REDIS_CLOUD_PORT,
-  // auth_pass: process.env.REDIS_CLOUD_PASS
+  // url: process.env.REDISCLOUD_GRAY_URL
+  host: process.env.REDISCLOUD_GRAY_HOST,
+  port: process.env.REDISCLOUD_GRAY_PORT,
+  auth_pass: process.env.REDISCLOUD_GRAY_PASS
 });

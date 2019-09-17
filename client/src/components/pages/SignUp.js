@@ -37,14 +37,14 @@ const useStyles = makeStyles({
     marginTop: "120px",
     display: "flex",
     width: "40vw",
-    minWidth: 200,
+    minWidth: "200px",
     flexWrap: "nowrap",
     flexDirection: "column"
   },
   button: {
     marginTop: 10,
     marginBottom: 10,
-    width: 200,
+
     fontSize: 16,
     alignSelf: "center"
   }
@@ -53,6 +53,7 @@ const useStyles = makeStyles({
 const SignIn = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordC, setPasswordC] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -80,6 +81,14 @@ const SignIn = props => {
           onChange={e => setPassword(e.target.value)}
           type="password"
         />
+        <CssTextField
+          label="Re-enter the password"
+          variant="outlined"
+          id="passwordC"
+          value={passwordC}
+          onChange={e => setPasswordC(e.target.value)}
+          type="password"
+        />
         <Button
           onClick={e => onSubmit(e)}
           variant="contained"
@@ -94,7 +103,7 @@ const SignIn = props => {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <a
             className={"googleButton"}
-            href="http://localhost:3001/auth/google"
+            href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
           >
             GOOGLE
           </a>

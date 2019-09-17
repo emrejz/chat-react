@@ -11,9 +11,10 @@ module.exports = server => {
   io.use(socketAuth);
   io.adapter(
     redisAdapter({
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      auth_pass: process.env.REDIS_PASS
+      // url: process.env.REDIS_CLOUD_URL,
+      host: process.env.REDIS_CLOUD_HOST,
+      port: process.env.REDIS_CLOUD_PORT,
+      auth_pass: process.env.REDIS_CLOUD_PASS
     })
   );
 
@@ -26,7 +27,7 @@ module.exports = server => {
         roomList = rooms;
       });
 
-      if (socket.request.user.username) Users.upsert(socket.request.user);
+      Users.upsert(socket.request.user);
       Users.getList(users => {
         io.emit("onlineList", users);
       });

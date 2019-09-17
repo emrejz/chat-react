@@ -36,14 +36,14 @@ const useStyles = makeStyles({
     marginTop: "120px",
     display: "flex",
     width: "40vw",
-    minWidth: 120,
+    minWidth: 200,
     flexWrap: "nowrap",
     flexDirection: "column"
   },
   button: {
     marginTop: 10,
     marginBottom: 10,
-    width: 200,
+
     fontSize: 16,
     alignSelf: "center"
   }
@@ -57,7 +57,7 @@ const SignIn = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log("emre");
+
     dispatch(signInActionLocal({ email, password }));
   };
   return (
@@ -94,7 +94,7 @@ const SignIn = props => {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <a
             className={"googleButton"}
-            href="http://localhost:3001/auth/google"
+            href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
           >
             GOOGLE
           </a>

@@ -7,11 +7,11 @@ const opt = {
 };
 var redis = require("redis").createClient();
 module.exports = new RedisStore({
-  client: redis,
+  // client: redis,
   // //serializer: true,
   // unset: "destroy"
   secret: process.env.SECRET_KEY,
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  pass: process.env.REDIS_PASS
+  host: process.env.REDIS_CLOUD_HOST,
+  port: process.env.REDIS_CLOUD_PORT,
+  auth_pass: process.env.REDIS_CLOUD_PASS
 });

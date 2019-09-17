@@ -12,3 +12,8 @@
 .MuiListItem-root {
   width: auto !important;
 }
+.MuiFormLabel-root {
+  background-color: white;
+  padding: 4px !important;
+  border-radius: 2px !important;
+}

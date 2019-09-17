@@ -17,7 +17,7 @@ app.use(cors());
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL, { useNewUrlParser: true })
+  .connect(process.env.DB_URL_MLAB, { useNewUrlParser: true })
   .then(res => console.log("mongo ok"))
   .catch(err => console.log("mongo err"));
 app.set("view engine", "pug");

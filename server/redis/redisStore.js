@@ -5,7 +5,7 @@ const opt = {
   port: process.env.REDIS_PORT,
   pass: process.env.REDIS_PASS
 };
-var redis = require("redis").createClient();
+
 module.exports = new RedisStore({
   // client: redis,
   // //serializer: true,

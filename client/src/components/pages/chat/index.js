@@ -37,7 +37,7 @@ const Chat = ({ history }) => {
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
-    } else dispatch(setSocket(io(process.env.REACT_APP_SOCKET_URL)));
+    } else dispatch(setSocket(io(process.env.REACT_APP_PROD_SOCKET_URL)));
   }, [socket]);
   if (user && user.username) {
     return <ChatContent />;

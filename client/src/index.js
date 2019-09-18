@@ -6,14 +6,14 @@ import App from "./components/App";
 import { Provider } from "react-redux";
 
 import { createStore, applyMiddleware, compose } from "redux";
-// import thunk from "redux-thunk";
-// import logger from "redux-logger";
-// import promise from "redux-promise-middleware";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
+import promise from "redux-promise-middleware";
 import rootReducer from "./reducers";
 require("dotenv").config();
-//const apply = applyMiddleware(promise, thunk, logger);
+const apply = applyMiddleware(promise, thunk, logger);
 const all = compose(
-  //apply,
+  apply,
   window.__REDUX_DEVTOOLS_EXTENSION__
     ? window.__REDUX_DEVTOOLS_EXTENSION__()
     : f => f

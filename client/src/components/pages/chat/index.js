@@ -51,7 +51,6 @@ const Chat = ({ history }) => {
           marginTop: 220
         }}
       >
-        {JSON.stringify(user)}
         YOU MUST SIGN IN/UP
       </div>
     );

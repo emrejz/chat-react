@@ -31,12 +31,13 @@ app.use(
     store: RedisStore,
 
     secret: process.env.SECRET_KEY,
-    resave: false,
+    resave: true,
+    rolling: true,
     saveUninitialized: false,
     cookie: {
       secure: true,
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "none"
     }
   })

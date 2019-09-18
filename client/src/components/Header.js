@@ -40,7 +40,7 @@ const Header = props => {
     <AppBar className={classes.root} position="static">
       <Toolbar>
         <div className={classes.title}>
-          {!user ? (
+          {!user || user.logged_in == false ? (
             <React.Fragment>
               <Button onClick={() => signIn()} color="inherit">
                 SIGN IN

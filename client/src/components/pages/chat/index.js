@@ -41,8 +41,20 @@ const Chat = ({ history }) => {
   }, [socket]);
   if (user && user.username) {
     return <ChatContent />;
-  } else if (user && !user.logged_in) return <Redirect to="/signup"></Redirect>;
-  else return <div> </div>;
+  } else
+    return (
+      <div
+        style={{
+          fontSize: 50,
+          color: "white",
+          textAlign: "center",
+          marginTop: 220
+        }}
+      >
+        {JSON.stringify(user)}
+        YOU MUST SIGN IN/UP
+      </div>
+    );
 };
 
 export default withRouter(Chat);

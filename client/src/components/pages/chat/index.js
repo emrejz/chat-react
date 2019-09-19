@@ -41,7 +41,8 @@ const Chat = ({ history }) => {
   }, [socket]);
   if (user && user.username) {
     return <ChatContent />;
-  } else
+  } else if (user == null) return <div></div>;
+  else
     return (
       <div
         style={{

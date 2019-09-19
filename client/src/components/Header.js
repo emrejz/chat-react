@@ -30,33 +30,33 @@ const Header = props => {
   const signUp = () => {
     props.history.push("/signup");
   };
-  const signOut = () => {
-    document.cookie = "connect.sid" + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    dispatch(getUser(""));
-    props.history.push("/signin");
-  };
+  // const signOut = () => {
+  //   document.cookie = "connect.sid" + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  //   dispatch(getUser(""));
+  //   props.history.push("/signin");
+  // };
 
   return (
-    <AppBar className={classes.root} position="static">
-      <Toolbar>
-        <div className={classes.title}>
-          {!user || user.logged_in == false ? (
-            <React.Fragment>
-              <Button onClick={() => signIn()} color="inherit">
-                SIGN IN
-              </Button>
-              <Button onClick={() => signUp()} color="inherit">
-                SIGN UP
-              </Button>
-            </React.Fragment>
-          ) : (
-            <Button onClick={() => signOut()} color="inherit">
-              SIGN OUT
-            </Button>
-          )}
-        </div>
-      </Toolbar>
-    </AppBar>
+    <React.Fragment>
+      {!user || user.logged_in == false ? (
+        <AppBar className={classes.root} position="static">
+          <Toolbar>
+            <div className={classes.title}>
+              <React.Fragment>
+                <Button onClick={() => signIn()} color="inherit">
+                  SIGN IN
+                </Button>
+                <Button onClick={() => signUp()} color="inherit">
+                  SIGN UP
+                </Button>
+              </React.Fragment>
+            </div>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <div></div>
+      )}
+    </React.Fragment>
   );
 };
 export default withRouter(Header);

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     flexWrap: "nowrap",
     backgroundColor: "black",
-    marginTop: 20
+    marginTop: 60
   }
 }));
 export default function ChatContent() {

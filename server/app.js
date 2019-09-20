@@ -31,7 +31,7 @@ app.use(
     store: RedisStore,
 
     secret: process.env.SECRET_KEY,
-    resave: true,
+    resave: false,
     rolling: true,
     saveUninitialized: false,
     cookie: {

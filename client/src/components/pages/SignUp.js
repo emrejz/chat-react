@@ -44,6 +44,7 @@ const useStyles = makeStyles({
   button: {
     marginTop: 10,
     marginBottom: 10,
+    width: 200,
 
     fontSize: 16,
     alignSelf: "center"
@@ -63,18 +64,24 @@ const SignIn = props => {
   };
   return (
     <Container maxWidth="sm">
-      <form onSubmit={e => onSubmit(e)} className={classes.root}>
+      <form
+        onSubmit={e => onSubmit(e)}
+        className={classes.root}
+        disabled={true}
+      >
         <CssTextField
           style={{ marginTop: 0 }}
           label="Enter email"
           variant="outlined"
           id="email"
+          disabled={true}
           value={email}
           onChange={e => setEmail(e.target.value)}
           type="email"
         />
         <CssTextField
           label="Enter password"
+          disabled={true}
           variant="outlined"
           id="password"
           value={password}
@@ -85,21 +92,27 @@ const SignIn = props => {
           label="Re-enter the password"
           variant="outlined"
           id="passwordC"
+          disabled={true}
           value={passwordC}
           onChange={e => setPasswordC(e.target.value)}
           type="password"
         />
         <Button
-          onClick={e => onSubmit(e)}
+          onClick={e => {
+            //onSubmit(e)
+          }}
           variant="contained"
           color="primary"
           className={classes.button}
         >
-          SIGN UP
+          Not working yet
         </Button>
         <div style={{ textAlign: "center", marginBottom: 10, color: "white" }}>
-          OR
+          You can only enter with Google
         </div>
+        {/* <div style={{ textAlign: "center", marginBottom: 10, color: "white" }}>
+          OR
+        </div> */}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <a
             className={"googleButton"}

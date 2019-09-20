@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import { getUser } from "../actions/socketAction";
+
 import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = props => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const classes = useStyles();
   const { user } = useSelector(state => state.socketReducer);
   const signIn = () => {
@@ -38,7 +38,7 @@ const Header = props => {
 
   return (
     <React.Fragment>
-      {user && user.logged_in == false ? (
+      {user === null || user.logged_in === false ? (
         <AppBar className={classes.root} position="static">
           <Toolbar>
             <div className={classes.title}>

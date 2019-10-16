@@ -11,13 +11,23 @@ const cors = require("cors");
 const passport = require("passport");
 const indexRouter = require("./routes/index");
 const socket = require("./socket/socket");
-//require("./auth/signUpLocal")
+
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://react-chatapp.netlify.com/",
+      "https://angular-chatapp.netlify.com/",
+      "https://vue-chatapp.netlify.com/"
+    ],
+    credentials: true,
+    preflightContinue: true
+  })
+);
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL_MLAB, { useNewUrlParser: true })
+  .connect(process.env.DB_URL, { useNewUrlParser: true, useCreateIndex: true })
   .then(res => console.log("mongo ok"))
   .catch(err => console.log("mongo err"));
 app.set("view engine", "pug");
@@ -29,16 +39,15 @@ app.use(
   session({
     key: "connect.sid",
     store: RedisStore,
-
     secret: process.env.SECRET_KEY,
     resave: false,
     rolling: true,
     saveUninitialized: false,
     cookie: {
       secure: false,
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: "none"
+      sameSite: false
     }
   })
 );

@@ -1,31 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../auth/index");
+const User = require("../model/user");
 
 router.post("/signup", function(req, res, next) {
-  passport.authenticate("local", function(err, user, info) {
-    if (err) {
-      return res.json(err);
-    }
-
-    req.login(user, function(err) {
-      if (err) {
-        return res.json(err);
-      }
-
-      return res.json(user);
-    });
+  passport.authenticate("local-signup", (error, user) => {
+    if (user)
+      req.logIn(user, error => {
+        if (error) return res.json({ error });
+        else return res.json({ user });
+      });
+    if (error) res.json({ error });
   })(req, res, next);
 });
-router.get("/signin", (req, res) => {
-  res.json({ user: req.user, error: req.error });
-});
-router.post("/signin", function(req, res, next) {
-  passport.authenticate("local-signin", (err, user, info) => {
-    if (user) {
-      return req.logIn(user, err => res.json({ error: err, user }));
-    }
-    return res.json({ error: err, user }); // continue to next middleware if no error.
+
+router.post("/signin", (req, res, next) => {
+  passport.authenticate("local-signin", (error, user) => {
+    if (user)
+      req.logIn(user, error => {
+        if (error) return res.json({ error });
+        else return res.json({ user });
+      });
+    if (error) res.json({ error });
   })(req, res, next);
 });
 

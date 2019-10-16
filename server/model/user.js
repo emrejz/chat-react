@@ -4,7 +4,7 @@ const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
 const User = new Schma({
   email: String,
-  username: { type: String, unique: false, minlength: 3, maxlength: 20 },
+  username: { type: String, unique: true, minlength: 3, maxlength: 20 },
   picture: String,
   password: String,
   createdAt: { type: Date, default: Date.now }
@@ -22,11 +22,8 @@ User.pre("save", function(next) {
   });
 });
 User.methods.comparePassword = function(candidatePassword, cb) {
-  console.log(candidatePassword);
   var user = this;
-
   bcrypt.compare(candidatePassword, user.password, function(err, isMatch) {
-    console.log(err, isMatch);
     if (err) return cb(err);
     cb(null, isMatch);
   });

@@ -1,36 +1,28 @@
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../model/user");
-const emailValid = require("../validator/emailValid");
 module.exports = new LocalStrategy(
   {
-    // by default, local strategy uses username and password, we will override with email
-    usernameField: "email",
-    passwordField: "password",
-    passReqToCallback: true // allows us to pass back the entire request to the callback
+    usernameField: "username",
+    passwordField: "password"
   },
-  function(req, email, password, done) {
-    email = email.toLowerCase().trim();
-    if (emailValid(email)) {
-      User.findOne({ email })
+  function(username, password, done) {
+    if (username && username.trim().length > 2) {
+      User.findOne({ username })
         .lean()
         .exec((err, user) => {
-          // if there are any errors, return the error
           if (err) return done("Database error.", null);
-
-          // check to see if theres already a user with that email
           if (user) {
-            return done("This email already exists.", false);
+            return done("This username already exists.", false);
           } else {
-            // if there is no user with that email
-            // create the user
-            password = password.trim();
-            if (password.length >= 3 && password.length <= 10) {
-              User({ email, password })
+            if (
+              password &&
+              password.trim().length >= 3 &&
+              password.trim().length <= 10
+            ) {
+              User({ username, password })
                 .save()
                 .then(user => {
                   delete user._doc.password;
-                  req.user = user;
-                  console.log("req.user", req.user);
                   return done(null, user);
                 })
                 .catch(err => done(err, null));
@@ -41,6 +33,6 @@ module.exports = new LocalStrategy(
               );
           }
         });
-    } else return done("Please enter a valid email address.", null);
+    } else return done("Please enter a valid username.", null);
   }
 );

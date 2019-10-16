@@ -12,7 +12,7 @@ passport.deserializeUser(function(user, done) {
     done(err, user);
   });
 });
-passport.use("local", signUpStrategy);
+passport.use("local-signup", signUpStrategy);
 passport.use("local-signin", signInStrategy);
 passport.use("google", googleStrategy);
 

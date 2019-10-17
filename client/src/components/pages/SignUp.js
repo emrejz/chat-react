@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpActionLocal } from "../../actions/signAction";
+import { Redirect } from "react-router-dom";
+
 const CssTextField = withStyles({
   root: {
     marginTop: 30,
@@ -48,22 +50,39 @@ const useStyles = makeStyles({
 
     fontSize: 16,
     alignSelf: "center"
+  },
+  errorMessage: {
+    color: "red",
+    marginTop: "60px",
+    textAlign: "center",
+    marginBottom: "-86px",
+    fontSize: "22px",
+    fontFamily: "monospace"
   }
 });
 
 const SignIn = props => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
   const dispatch = useDispatch();
+  const signUpReducer = useSelector(state => state.signUpReducer);
   const classes = useStyles();
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(signUpActionLocal({ email, password }));
+    if (password === passwordC)
+      dispatch(signUpActionLocal({ username, password }));
   };
   return (
     <Container maxWidth="sm">
+      {signUpReducer.error.message || signUpReducer.data.error ? (
+        <div className={classes.errorMessage}>
+          {signUpReducer.error.message || signUpReducer.data.error}
+        </div>
+      ) : (
+        ""
+      )}
       <form
         onSubmit={e => onSubmit(e)}
         className={classes.root}
@@ -71,19 +90,20 @@ const SignIn = props => {
       >
         <CssTextField
           style={{ marginTop: 0 }}
-          label="Enter email"
+          label="Enter username"
           variant="outlined"
           id="email"
-          disabled={true}
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          type="email"
+          required
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          type="text"
         />
         <CssTextField
           label="Enter password"
-          disabled={true}
           variant="outlined"
           id="password"
+          required
+          error={password !== passwordC}
           value={password}
           onChange={e => setPassword(e.target.value)}
           type="password"
@@ -92,36 +112,40 @@ const SignIn = props => {
           label="Re-enter the password"
           variant="outlined"
           id="passwordC"
-          disabled={true}
+          required
+          error={password !== passwordC}
           value={passwordC}
           onChange={e => setPasswordC(e.target.value)}
           type="password"
         />
         <Button
-          onClick={e => {
-            //onSubmit(e)
-          }}
+          type="submit"
           variant="contained"
           color="primary"
           className={classes.button}
         >
-          Not working yet
+          SIGN UP
         </Button>
-        <div style={{ textAlign: "center", marginBottom: 10, color: "white" }}>
-          You can only enter with Google
-        </div>
-        {/* <div style={{ textAlign: "center", marginBottom: 10, color: "white" }}>
-          OR
-        </div> */}
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <a
-            className={"googleButton"}
-            href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-          >
-            GOOGLE
-          </a>
-        </div>
       </form>
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: 10,
+          marginTop: 14,
+          color: "white"
+        }}
+      >
+        OR
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <a
+          className={"googleButton"}
+          href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+        >
+          GOOGLE
+        </a>
+      </div>
+      {signUpReducer.data.user ? <Redirect to="/chat" /> : ""}
     </Container>
   );
 };

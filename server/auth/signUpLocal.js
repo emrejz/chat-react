@@ -33,6 +33,7 @@ module.exports = new LocalStrategy(
               );
           }
         });
-    } else return done("Please enter a valid username.", null);
+    } else
+      return done("Username length can be between 3 and 20 characters.", null);
   }
 );

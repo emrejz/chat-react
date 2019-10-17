@@ -38,7 +38,10 @@ const useStyles = makeStyles(theme => ({
   namePanel: {
     height: "8vh",
     fontSize: 22,
-    fontWeight: "600"
+    fontWeight: "600",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "14px"
+    }
   },
   chatPanel: {
     height: "60vh"

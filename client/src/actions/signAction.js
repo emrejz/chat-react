@@ -13,14 +13,22 @@ const SIGNED_USER = "SIGNED_USER";
 export const signInActionLocal = data => dispatch => {
   dispatch({
     type: SIGNIN_LOCAL,
-    payload: axios.post("http://localhost:3001/signin", data)
+    payload: axios
+      .post(process.env.REACT_APP_PROD_SERVER_URL + "signin", data, {
+        withCredentials: true
+      })
+      .then(res => res.data)
   });
 };
 
 export const signUpActionLocal = data => dispatch => {
   dispatch({
     type: SIGNUP_LOCAL,
-    payload: axios.post("http://localhost:3001/signup", data)
+    payload: axios
+      .post(process.env.REACT_APP_PROD_SERVER_URL + "signup", data, {
+        withCredentials: true
+      })
+      .then(res => res.data)
   });
 };
 export const signedUser = data => ({

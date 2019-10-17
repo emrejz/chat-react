@@ -4,7 +4,7 @@ import {
   SIGNIN_LOCAL_REJECTED
 } from "../actions/signAction";
 const initState = {
-  signIn: {},
+  data: {},
   error: {},
   fetching: false,
   fetched: false
@@ -21,7 +21,7 @@ const signInReducer = (state = initState, { type, payload }) => {
         ...state,
         fetching: false,
         fetched: true,
-        signIn: payload
+        data: payload
       };
     case SIGNIN_LOCAL_REJECTED:
       return {

@@ -16,9 +16,10 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://react-chatapp.netlify.com/",
-      "https://angular-chatapp.netlify.com/",
-      "https://vue-chatapp.netlify.com/"
+      "http://localhost:3000",
+      "https://react-chatapp.netlify.com",
+      "https://angular-chatapp.netlify.com",
+      "https://vue-chatapp.netlify.com"
     ],
     credentials: true,
     preflightContinue: true

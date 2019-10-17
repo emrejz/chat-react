@@ -53,31 +53,42 @@ export default function LeftPaper() {
         >
           Rooms
         </Button>
-
         <div className={classes.root}>
           {tabID === 0 ? (
             <React.Fragment>
               {onlineList.map(item => (
-                <React.Fragment key={item.username}>
-                  <ListItem button>
+                <div
+                  style={{ position: "relative", height: "56px" }}
+                  key={item.username}
+                >
+                  <ListItem className={classes.listItem} button>
                     <ListItemAvatar>
                       <Avatar alt={item.username} src={item.picture} />
                     </ListItemAvatar>
                     <div>{item.username}</div>
                   </ListItem>
-
-                  <Divider variant="fullWidth" />
-                </React.Fragment>
+                </div>
               ))}
             </React.Fragment>
           ) : (
             <React.Fragment>
               {roomList.map(item => (
                 <React.Fragment key={item.name}>
-                  <ListItem button onClick={() => selectRoomButton(item.name)}>
-                    <div>{item.name}</div>
-                  </ListItem>
-                  <Divider variant="fullWidth" />
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "34px"
+                    }}
+                  >
+                    <ListItem
+                      className={classes.listItem}
+                      button
+                      onClick={() => selectRoomButton(item.name)}
+                    >
+                      <div>{item.name}</div>
+                    </ListItem>
+                  </div>
                 </React.Fragment>
               ))}
             </React.Fragment>
@@ -128,5 +139,22 @@ const useStyles = makeStyles(theme => ({
     position: "absolute ",
     bottom: "10px",
     width: "90%"
+  },
+  listItem: {
+    transition: ".2s ease",
+    borderBottom: "1px solid gray",
+    zIndex: 10,
+    borderBottom: "inset",
+    "&:hover": {
+      width: "auto !important",
+      minWidth: "16% ",
+      position: "fixed",
+      textDecoration: "none",
+      backgroundColor: "greenyellow",
+      fontSize: "20px",
+      transition: ".2s ease",
+      borderRadius: "0px 20px 20px 0px",
+      borderBottom: "none"
+    }
   }
 }));

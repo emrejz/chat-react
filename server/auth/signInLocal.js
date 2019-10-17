@@ -24,7 +24,8 @@ const signInStrategy = new Strategy(
             });
           }
         });
-    } else return done("Please enter a valid username.", null);
+    } else
+      return done("Username length can be between 3 and 20 characters.", null);
   }
 );
 module.exports = signInStrategy;

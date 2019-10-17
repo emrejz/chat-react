@@ -27,7 +27,7 @@ const InputMessage = () => {
           onChange={e => setText(e.target.value)}
           id="outlined-full-width"
           label="Your Message"
-          placeholder="placeholder"
+          placeholder="enter message"
           autoComplete="false"
           autoSave="false"
           margin="normal"

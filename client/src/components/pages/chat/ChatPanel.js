@@ -35,7 +35,7 @@ export default function ChatPanel() {
                 className={classes.strangerMessage}
                 alignItems="flex-start"
               >
-                <ListItemAvatar>
+                <ListItemAvatar className={classes.avatar}>
                   <Avatar alt="avatar" src={item.picture} />
                 </ListItemAvatar>
                 <ListItemText
@@ -75,7 +75,7 @@ export default function ChatPanel() {
                     </React.Fragment>
                   }
                 />
-                <ListItemAvatar>
+                <ListItemAvatar className={classes.avatar}>
                   <Avatar
                     alt={"avatar"}
                     src={item.picture}
@@ -121,7 +121,7 @@ const useStyles = makeStyles(theme => ({
     float: "left",
     //   maxWidth: "88%",
     color: "white",
-    backgroundColor: "#0cdc4c",
+    backgroundColor: "crimson",
     borderRadius: 8,
     marginBottom: 10,
     marginLeft: 4
@@ -136,5 +136,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: "right",
     marginBottom: 10,
     marginRight: 4
+  },
+  avatar: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    }
   }
 }));

@@ -3,8 +3,8 @@ import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { signInActionLocal } from "../../actions/signAction";
-import { setSocket } from "../../actions/socketAction";
+import { signInActionLocal } from "../../../actions/signAction";
+import { setSocket } from "../../../actions/socketAction";
 
 const CssTextField = withStyles({
   root: {

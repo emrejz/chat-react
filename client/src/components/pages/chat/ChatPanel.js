@@ -8,6 +8,7 @@ import {
   ListItemText
 } from "@material-ui/core/";
 import { useSelector } from "react-redux";
+import defaultImg from "../../../assets/uniSex.jpg";
 
 export default function ChatPanel() {
   const classes = useStyles();
@@ -36,7 +37,10 @@ export default function ChatPanel() {
                 alignItems="flex-start"
               >
                 <ListItemAvatar className={classes.avatar}>
-                  <Avatar alt="avatar" src={item.picture} />
+                  <Avatar
+                    alt="avatar"
+                    src={item.picture ? item.picture : defaultImg}
+                  />
                 </ListItemAvatar>
                 <ListItemText
                   className={classes.usernameStr}
@@ -78,7 +82,7 @@ export default function ChatPanel() {
                 <ListItemAvatar className={classes.avatar}>
                   <Avatar
                     alt={"avatar"}
-                    src={item.picture}
+                    src={item.picture ? item.picture : defaultImg}
                     style={{ margin: 0, marginLeft: 16 }}
                   />
                 </ListItemAvatar>

@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core/";
 import { useSelector, useDispatch } from "react-redux";
 import { selectedRoom } from "../../../actions/socketAction";
+import defaultImg from "../../../assets/uniSex.jpg";
 
 export default function LeftPaper() {
   const classes = useStyles();
@@ -63,7 +64,10 @@ export default function LeftPaper() {
                 >
                   <ListItem className={classes.listItem} button>
                     <ListItemAvatar>
-                      <Avatar alt={item.username} src={item.picture} />
+                      <Avatar
+                        alt={item.username}
+                        src={item.picture ? item.picture : defaultImg}
+                      />
                     </ListItemAvatar>
                     <div>{item.username}</div>
                   </ListItem>

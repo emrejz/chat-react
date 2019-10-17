@@ -16,10 +16,10 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://react-chatapp.netlify.com",
-      "https://angular-chatapp.netlify.com",
-      "https://vue-chatapp.netlify.com"
+      "http://knowing-room.surge.sh",
+      "http://chatapp-react.surge.sh",
+      "http://chatapp-vue.surge.sh",
+      "http://chatapp-angular.surge.sh"
     ],
     credentials: true,
     preflightContinue: true

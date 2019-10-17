@@ -40,7 +40,7 @@ const Chat = ({ history }) => {
     } else dispatch(setSocket(io(process.env.REACT_APP_PROD_SERVER_URL)));
   }, [socket]);
   if (user && user.username) {
-    return <ChatContent />;
+    return <ChatContent history={history} />;
   } else if (user == null) return <div></div>;
   else
     return (

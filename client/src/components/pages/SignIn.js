@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signInActionLocal } from "../../actions/signAction";
-import { Redirect } from "react-router-dom";
+import { setSocket } from "../../actions/socketAction";
+
 const CssTextField = withStyles({
   root: {
     marginTop: 30,
@@ -65,11 +66,15 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const signInReducer = useSelector(state => state.signInReducer);
+  const socketReducer = useSelector(state => state.socketReducer);
   const onSubmit = e => {
     e.preventDefault();
     if (username.length > 0 && password.length > 0)
       dispatch(signInActionLocal({ username, password }));
   };
+  useEffect(() => {
+    if (signInReducer.data.user) dispatch(setSocket(null));
+  }, [signInReducer.data]);
 
   return (
     <Container maxWidth="sm">
@@ -127,7 +132,6 @@ const SignIn = props => {
           GOOGLE
         </a>
       </div>
-      {signInReducer.data.user ? <Redirect to="/chat" /> : ""}
     </Container>
   );
 };

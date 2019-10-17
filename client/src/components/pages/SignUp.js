@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signUpActionLocal } from "../../actions/signAction";
+import { setSocket } from "../../actions/socketAction";
 import { Redirect } from "react-router-dom";
 
 const CssTextField = withStyles({
@@ -74,6 +75,9 @@ const SignIn = props => {
     if (password === passwordC)
       dispatch(signUpActionLocal({ username, password }));
   };
+  useEffect(() => {
+    if (signUpReducer.data.user) dispatch(setSocket(null));
+  }, [signUpReducer.data]);
   return (
     <Container maxWidth="sm">
       {signUpReducer.error.message || signUpReducer.data.error ? (

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = props => {
-  // const dispatch = useDispatch();
   const classes = useStyles();
   const { user } = useSelector(state => state.socketReducer);
   const signIn = () => {

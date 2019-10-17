@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Container, Button } from "@material-ui/core/";
 import LeftPaper from "./LeftPaper";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { setSocket } from "../../../actions/socketAction";
 
 import RightPaper from "./RightPaper";
 
@@ -20,12 +22,13 @@ const useStyles = makeStyles(theme => ({
     right: 32
   }
 }));
-export default function ChatContent({ history }) {
+export default function ChatContent() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
   const signOutFun = () => {
     removeCookie("connect.sid");
-    history.push("/signin");
+    dispatch(setSocket(null));
   };
   return (
     <div>

@@ -22,7 +22,7 @@ const socketReducer = (state = initState, { type, payload }) => {
     case "selectedRoom":
       return { ...state, selectedRoom: payload };
     case "setSocket":
-      return { ...state, socket: payload };
+      return { ...state, socket: payload, user: null };
     case "roomMessages":
       return { ...state, messageList: payload };
     default:

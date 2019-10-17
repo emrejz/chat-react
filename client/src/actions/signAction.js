@@ -7,9 +7,13 @@ export const SIGNUP_LOCAL_PENDING = "SIGNUP_LOCAL_PENDING";
 export const SIGNUP_LOCAL_FULFILLED = "SIGNUP_LOCAL_FULFILLED";
 export const SIGNUP_LOCAL_REJECTED = "SIGNUP_LOCAL_REJECTED";
 
+export const SIGNOUT_LOCAL_PENDING = "SIGNOUT_LOCAL_PENDING";
+export const SIGNOUT_LOCAL_FULFILLED = "SIGNOUT_LOCAL_FULFILLED";
+export const SIGNOUT_LOCAL_REJECTED = "SIGNOUT_LOCAL_REJECTED";
+
 const SIGNIN_LOCAL = "SIGNIN_LOCAL";
 const SIGNUP_LOCAL = "SIGNUP_LOCAL";
-const SIGNED_USER = "SIGNED_USER";
+const SIGNOUT_LOCAL = "SIGNOUT_LOCAL";
 export const signInActionLocal = data => dispatch => {
   dispatch({
     type: SIGNIN_LOCAL,
@@ -31,7 +35,8 @@ export const signUpActionLocal = data => dispatch => {
       .then(res => res.data)
   });
 };
-export const signedUser = data => ({
-  type: SIGNED_USER,
-  payload: data
-});
+export const signOutAction = () => {
+  return axios.get(process.env.REACT_APP_PROD_SERVER_URL + "logout", {
+    withCredentials: true
+  });
+};

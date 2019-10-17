@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../auth/index");
-const User = require("../model/user");
 
 router.post("/signup", function(req, res, next) {
   passport.authenticate("local-signup", (error, user) => {
@@ -24,7 +23,10 @@ router.post("/signin", (req, res, next) => {
     if (error) res.json({ error });
   })(req, res, next);
 });
-
+router.get("/logout", (req, res, next) => {
+  req.logout();
+  res.json({ status: true });
+});
 router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
@@ -33,7 +35,6 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/auth/google" }),
   function(req, res) {
-    // Successful authentication, redirect home.
     res.redirect(process.env.CLIENT_URL);
   }
 );

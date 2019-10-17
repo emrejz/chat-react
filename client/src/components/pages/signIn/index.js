@@ -66,14 +66,16 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const signInReducer = useSelector(state => state.signInReducer);
-  const socketReducer = useSelector(state => state.socketReducer);
   const onSubmit = e => {
     e.preventDefault();
     if (username.length > 0 && password.length > 0)
       dispatch(signInActionLocal({ username, password }));
   };
   useEffect(() => {
-    if (signInReducer.data.user) dispatch(setSocket(null));
+    if (signInReducer.data.user) {
+      console.log("çalıştı");
+      dispatch(setSocket(null));
+    }
   }, [signInReducer.data]);
 
   return (

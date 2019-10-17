@@ -9,6 +9,7 @@ import Home from "./pages/home";
 import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import fart from "../assets/fart.mp3";
+import { DotLoader } from "react-spinners";
 import {
   getUser,
   onlineList,
@@ -37,20 +38,20 @@ const Root = user => {
     </BrowserRouter>
   );
 };
-
 function App() {
   const dispatch = useDispatch();
 
   const [audio] = useState(new Audio(fart));
-
   const { messageList, socket, user: thisUser } = useSelector(
     state => state.socketReducer
   );
-  const audioPlay = who => {
-    if (thisUser && thisUser.username !== who.username) {
+  const [newMsgUser, setNewMsgUser] = useState(null);
+  useEffect(() => {
+    if (thisUser && thisUser.username !== newMsgUser.username) {
       audio.play();
     }
-  };
+  }, [newMsgUser]);
+
   useEffect(() => {
     if (socket) {
       socket.on("userInfo", data => {
@@ -72,14 +73,31 @@ function App() {
       });
       socket.on("newMessage", data => {
         const { message, roomName, user } = data;
-        audioPlay(user);
+        setNewMsgUser(user);
 
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
     } else dispatch(setSocket(io(process.env.REACT_APP_PROD_SERVER_URL)));
   }, [socket]);
-  return <Root user={thisUser} />;
+  return (
+    <Fragment>
+      {thisUser ? (
+        <Root user={thisUser} />
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            marginTop: "200px",
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          <DotLoader sizeUnit={"px"} size={120} color={"white"} />
+        </div>
+      )}
+    </Fragment>
+  );
 }
 
 export default App;

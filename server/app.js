@@ -16,8 +16,10 @@ const app = express();
 app.use(
   cors({
     origin: [
+      "http://localhost:3000",
       "http://knowing-room.surge.sh",
       "http://chatapp-react.surge.sh",
+      "http://chatapp-react.surge.sh/",
       "http://chatapp-vue.surge.sh",
       "http://chatapp-angular.surge.sh"
     ],
@@ -28,7 +30,10 @@ app.use(
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL, { useNewUrlParser: true, useCreateIndex: true })
+  .connect(process.env.DB_URL_MLAB, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
   .then(res => console.log("mongo ok"))
   .catch(err => console.log("mongo err"));
 app.set("view engine", "pug");
@@ -42,7 +47,7 @@ app.use(
     store: RedisStore,
     secret: process.env.SECRET_KEY,
     resave: false,
-    rolling: true,
+    //rolling: true,
     saveUninitialized: false,
     cookie: {
       secure: false,

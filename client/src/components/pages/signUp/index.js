@@ -5,7 +5,6 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpActionLocal } from "../../../actions/signAction";
 import { setSocket } from "../../../actions/socketAction";
-import { Redirect } from "react-router-dom";
 
 const CssTextField = withStyles({
   root: {
@@ -149,7 +148,6 @@ const SignIn = props => {
           GOOGLE
         </a>
       </div>
-      {signUpReducer.data.user ? <Redirect to="/chat" /> : ""}
     </Container>
   );
 };

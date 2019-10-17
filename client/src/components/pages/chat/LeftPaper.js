@@ -5,8 +5,7 @@ import {
   Button,
   ListItem,
   ListItemAvatar,
-  Avatar,
-  Divider
+  Avatar
 } from "@material-ui/core/";
 import { useSelector, useDispatch } from "react-redux";
 import { selectedRoom } from "../../../actions/socketAction";

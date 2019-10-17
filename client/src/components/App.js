@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "../stylesheets/App.css";
 import Header from "./Header.js";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -8,7 +8,7 @@ import Chat from "./pages/chat";
 import Home from "./pages/home";
 import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
-
+import fart from "../assets/fart.mp3";
 import {
   getUser,
   onlineList,
@@ -37,11 +37,20 @@ const Root = user => {
     </BrowserRouter>
   );
 };
+
 function App() {
   const dispatch = useDispatch();
-  const { messageList, socket, user } = useSelector(
+
+  const [audio] = useState(new Audio(fart));
+
+  const { messageList, socket, user: thisUser } = useSelector(
     state => state.socketReducer
   );
+  const audioPlay = who => {
+    if (thisUser && thisUser.username !== who.username) {
+      audio.play();
+    }
+  };
   useEffect(() => {
     if (socket) {
       socket.on("userInfo", data => {
@@ -63,12 +72,14 @@ function App() {
       });
       socket.on("newMessage", data => {
         const { message, roomName, user } = data;
+        audioPlay(user);
+
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
     } else dispatch(setSocket(io(process.env.REACT_APP_PROD_SERVER_URL)));
   }, [socket]);
-  return <Root user={user} />;
+  return <Root user={thisUser} />;
 }
 
 export default App;

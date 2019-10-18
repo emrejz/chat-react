@@ -30,7 +30,7 @@ app.use(
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL_MLAB, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true
   })

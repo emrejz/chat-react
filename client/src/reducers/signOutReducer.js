@@ -1,7 +1,7 @@
 import {
-  SIGNOUT_LOCAL_PENDING,
-  SIGNOUT_LOCAL_FULFILLED,
-  SIGNOUT_LOCAL_REJECTED
+  SIGNOUT_ALL_PENDING,
+  SIGNOUT_ALL_FULFILLED,
+  SIGNOUT_ALL_REJECTED
 } from "../actions/signAction";
 const initState = {
   data: {},
@@ -11,19 +11,19 @@ const initState = {
 };
 const signOutReducer = (state = initState, { type, payload }) => {
   switch (type) {
-    case SIGNOUT_LOCAL_PENDING:
+    case SIGNOUT_ALL_PENDING:
       return {
-        ...state,
+        ...initState,
         fetching: true
       };
-    case SIGNOUT_LOCAL_FULFILLED:
+    case SIGNOUT_ALL_FULFILLED:
       return {
         ...state,
         fetching: false,
         fetched: true,
         data: payload
       };
-    case SIGNOUT_LOCAL_REJECTED:
+    case SIGNOUT_ALL_REJECTED:
       return {
         ...state,
         fetching: false,

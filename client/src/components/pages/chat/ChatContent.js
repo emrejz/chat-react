@@ -5,7 +5,7 @@ import LeftPaper from "./LeftPaper";
 import { signOutAction } from "../../../actions/signAction";
 import { setSocket } from "../../../actions/socketAction";
 import RightPaper from "./RightPaper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,12 +24,13 @@ const useStyles = makeStyles(theme => ({
 export default function ChatContent() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const store = useSelector(state => state);
+
   const signOutFun = () => {
-    signOutAction().then(res => {
-      if (res.data.status) {
-        dispatch(setSocket(null));
-      }
-    });
+    dispatch(signOutAction());
+    store.signInReducer.data = {};
+    store.signUpReducer.data = {};
+    dispatch(setSocket(null));
   };
   return (
     <div>

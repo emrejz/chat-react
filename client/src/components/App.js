@@ -78,7 +78,14 @@ function App() {
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
-    } else dispatch(setSocket(io(process.env.REACT_APP_PROD_SERVER_URL)));
+    } else
+      dispatch(
+        setSocket(
+          io(process.env.REACT_APP_PROD_SERVER_URL, {
+            transports: ["websocket"]
+          })
+        )
+      );
   }, [socket]);
   return (
     <Fragment>

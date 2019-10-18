@@ -73,7 +73,6 @@ const SignIn = props => {
   };
   useEffect(() => {
     if (signInReducer.data.user) {
-      console.log("çalıştı");
       dispatch(setSocket(null));
     }
   }, [signInReducer.data]);

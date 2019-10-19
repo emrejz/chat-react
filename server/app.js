@@ -19,7 +19,6 @@ app.use(
       "http://localhost:3000",
       "http://knowing-room.surge.sh",
       "http://chatapp-react.surge.sh",
-      "http://chatapp-react.surge.sh/",
       "http://chatapp-vue.surge.sh",
       "http://chatapp-angular.surge.sh"
     ],
@@ -47,7 +46,6 @@ app.use(
     store: RedisStore,
     secret: process.env.SECRET_KEY,
     resave: false,
-    //rolling: true,
     saveUninitialized: false,
     cookie: {
       secure: false,

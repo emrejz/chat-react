@@ -7,32 +7,28 @@ const Messages = require("../redis/lib/Messages");
 module.exports = server => {
   const io = socket.listen(server);
   let roomList = [];
-
   io.use(socketAuth);
   io.adapter(
     redisAdapter({
-      //   url: process.env.REDISCLOUD_URL
+      //url: process.env.REDISCLOUD_URL
       host: process.env.REDIS_HOST,
       port: process.env.REDIS_PORT,
       auth_pass: process.env.REDIS_PASS
     })
   );
-
   io.on("connection", socket => {
-    if (socket.request.user.username) {
-      let user = null;
-
+    let { user } = socket.request;
+    if (user.username) {
+      delete user.password;
       Rooms.getList(rooms => {
         io.emit("roomList", rooms);
         roomList = rooms;
       });
-
-      Users.upsert(socket.request.user);
+      Users.upsert(user);
       Users.getList(users => {
         io.emit("onlineList", users);
       });
-
-      socket.emit("userInfo", socket.request.user);
+      socket.emit("userInfo", user);
       socket.on("addRoom", roomName => {
         if (roomList.length == 0) {
           Rooms.upsert(roomName);
@@ -49,13 +45,11 @@ module.exports = server => {
           }
         }
       });
-
       socket.on("roomMessages", room => {
         socket.join(room);
         Messages.getList(room, messages => {
           let msgList = {};
           msgList[room] = messages;
-
           socket.emit("roomMesasges", msgList);
         });
       });
@@ -64,18 +58,21 @@ module.exports = server => {
         const msgData = {
           message,
           roomName: selectedRoom,
+          when: Date.now(),
           user: { username: user.username, picture: user.picture }
         };
-
         Messages.upsert(msgData);
         io.to(selectedRoom).emit("newMessage", msgData);
       });
-
       socket.on("newUser", newUser => (user = newUser));
       socket.on("disconnect", () => {
-        Users.remove(socket.request.user);
+        Users.remove(user);
+        socket.disconnect();
         Users.getList(users => io.emit("onlineList", users));
       });
-    } else socket.emit("userInfo", socket.request.user);
+    } else {
+      socket.emit("userInfo", user);
+      socket.disconnect();
+    }
   });
 };

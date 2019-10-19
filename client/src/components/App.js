@@ -6,10 +6,10 @@ import SignIn from "./pages/signIn/";
 import SignUp from "./pages/signUp/";
 import Chat from "./pages/chat";
 import Home from "./pages/home";
+import Loading from "./pages/loading";
 import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import fart from "../assets/fart.mp3";
-import { DotLoader } from "react-spinners";
 import {
   getUser,
   onlineList,
@@ -17,7 +17,6 @@ import {
   setSocket,
   roomMessages
 } from "../actions/socketAction";
-
 const Root = user => {
   return (
     <BrowserRouter>
@@ -28,11 +27,14 @@ const Root = user => {
           <Route path="/signin" render={() => <SignIn />} />
           <Route path="/signup" render={() => <SignUp />} />
           <Route path="/chat" render={() => <Chat />} />
+          <Route path="/loading" component={Loading} />
         </Switch>
-        {user.user && user.user.username ? (
+        {user && user.user && user.user.username ? (
           <Redirect to="/chat" />
-        ) : (
+        ) : user && user.user && user.user.logged_in === false ? (
           <Redirect to="/" />
+        ) : (
+          <Redirect to="/loading" />
         )}
       </Fragment>
     </BrowserRouter>
@@ -40,25 +42,26 @@ const Root = user => {
 };
 function App() {
   const dispatch = useDispatch();
-
   const [audio] = useState(new Audio(fart));
-  const { messageList, socket, user: thisUser } = useSelector(
-    state => state.socketReducer
-  );
+  const store = useSelector(state => state);
   const [newMsgUser, setNewMsgUser] = useState(null);
+  const [connectedSocket, setConnectedSocket] = useState(false);
   useEffect(() => {
-    if (thisUser && thisUser.username !== newMsgUser.username) {
+    console.log("useEffect");
+    let { messageList, socket, user: thisUser } = store.socketReducer;
+    if (thisUser && newMsgUser && thisUser.username !== newMsgUser.username) {
+      console.log("audio");
+      setNewMsgUser(null);
       audio.play();
     }
-  }, [newMsgUser]);
-
-  useEffect(() => {
-    if (socket) {
+    if (store.signOutReducer.data && store.signOutReducer.data.status) {
+      store.signOutReducer.data = {};
+      dispatch(setSocket(null));
+    }
+    if (socket && connectedSocket) {
+      setConnectedSocket(false);
       socket.on("userInfo", data => {
         dispatch(getUser(data));
-        if (data.logged_in === false) {
-          socket.disconnect();
-        }
         socket.emit("newUser", data);
       });
       socket.on("roomList", data => dispatch(getRoomList(data)));
@@ -74,11 +77,15 @@ function App() {
       socket.on("newMessage", data => {
         const { message, roomName, user } = data;
         setNewMsgUser(user);
-
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
-    } else
+    }
+    if (
+      !socket &&
+      store.signOutReducer.data &&
+      !store.signOutReducer.data.status
+    ) {
       dispatch(
         setSocket(
           io(process.env.REACT_APP_PROD_SERVER_URL, {
@@ -86,25 +93,19 @@ function App() {
           })
         )
       );
-  }, [socket]);
-  return (
-    <Fragment>
-      {thisUser ? (
-        <Root user={thisUser} />
-      ) : (
-        <div
-          style={{
-            width: "100%",
-            marginTop: "200px",
-            display: "flex",
-            justifyContent: "center"
-          }}
-        >
-          <DotLoader sizeUnit={"px"} size={120} color={"white"} />
-        </div>
-      )}
-    </Fragment>
-  );
+      setConnectedSocket(true);
+    }
+    if (
+      (store.signInReducer.data && store.signInReducer.data.user) ||
+      (store.signUpReducer.data && store.signUpReducer.data.user)
+    ) {
+      console.log("login logup");
+      store.signOutReducer.data = {};
+      store.signInReducer.data = {};
+      store.signUpReducer.data = {};
+      dispatch(setSocket(null));
+    }
+  });
+  return <Root user={store.socketReducer.user} />;
 }
-
 export default App;

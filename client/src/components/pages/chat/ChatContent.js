@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Button } from "@material-ui/core/";
 import LeftPaper from "./LeftPaper";
 import { signOutAction } from "../../../actions/signAction";
-import { setSocket } from "../../../actions/socketAction";
 import RightPaper from "./RightPaper";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,14 +23,11 @@ const useStyles = makeStyles(theme => ({
 export default function ChatContent() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const store = useSelector(state => state);
 
   const signOutFun = () => {
     dispatch(signOutAction());
-    store.signInReducer.data = {};
-    store.signUpReducer.data = {};
-    dispatch(setSocket(null));
   };
+
   return (
     <div>
       <Container maxWidth="lg">

@@ -4,7 +4,7 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signInActionLocal } from "../../../actions/signAction";
-import { setSocket } from "../../../actions/socketAction";
+import SignWithGoogle from "../../SignWithGoogle";
 
 const CssTextField = withStyles({
   root: {
@@ -68,14 +68,15 @@ const SignIn = props => {
   const signInReducer = useSelector(state => state.signInReducer);
   const onSubmit = e => {
     e.preventDefault();
-    if (username.length > 0 && password.length > 0)
-      dispatch(signInActionLocal({ username, password }));
-  };
-  useEffect(() => {
-    if (signInReducer.data.user) {
-      dispatch(setSocket(null));
+    if (username.length > 0 && password.length > 0) {
+      dispatch(
+        signInActionLocal({
+          username,
+          password
+        })
+      );
     }
-  }, [signInReducer.data]);
+  };
 
   return (
     <Container maxWidth="sm">
@@ -126,12 +127,7 @@ const SignIn = props => {
         OR
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <a
-          className={"googleButton"}
-          href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-        >
-          GOOGLE
-        </a>
+        <SignWithGoogle />
       </div>
     </Container>
   );

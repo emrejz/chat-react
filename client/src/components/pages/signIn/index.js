@@ -1,64 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signInActionLocal } from "../../../actions/signAction";
 import SignWithGoogle from "../../SignWithGoogle";
-
-const CssTextField = withStyles({
-  root: {
-    marginTop: 30,
-    borderWidth: 3,
-    backgroundColor: "white",
-    "& label.Mui-focused": {
-      color: "green"
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "green"
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderWidth: 2,
-        borderColor: "black"
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
-  }
-})(TextField);
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: "rgba(0,0,0,.3)",
-    margin: "auto",
-    // padding: 10,
-    border: "2px solid white",
-    borderRadius: 4,
-    marginTop: "120px",
-    display: "flex",
-    width: "40vw",
-    minWidth: 200,
-    flexWrap: "nowrap",
-    flexDirection: "column"
-  },
-  button: {
-    marginTop: 10,
-    marginBottom: 10,
-    width: 200,
-
-    fontSize: 16,
-    alignSelf: "center"
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "60px",
-    textAlign: "center",
-    marginBottom: "-86px",
-    fontSize: "22px",
-    fontFamily: "monospace"
-  }
-});
 
 const SignIn = props => {
   const [username, setUsername] = useState("");
@@ -134,3 +80,57 @@ const SignIn = props => {
 };
 
 export default SignIn;
+
+const CssTextField = withStyles({
+  root: {
+    marginTop: 30,
+    borderWidth: 3,
+    backgroundColor: "white",
+    "& label.Mui-focused": {
+      color: "green"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "green"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderWidth: 2,
+        borderColor: "black"
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "green"
+      }
+    }
+  }
+})(TextField);
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: "rgba(0,0,0,.3)",
+    margin: "auto",
+    // padding: 10,
+    border: "2px solid white",
+    borderRadius: 4,
+    marginTop: "120px",
+    display: "flex",
+    width: "40vw",
+    minWidth: 200,
+    flexWrap: "nowrap",
+    flexDirection: "column"
+  },
+  button: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 200,
+
+    fontSize: 16,
+    alignSelf: "center"
+  },
+  errorMessage: {
+    color: "red",
+    marginTop: "60px",
+    textAlign: "center",
+    marginBottom: "-86px",
+    fontSize: "22px",
+    fontFamily: "monospace"
+  }
+});

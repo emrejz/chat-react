@@ -10,7 +10,6 @@ export default function ChatPanel() {
   const leng = messageList[selectedRoom]
     ? messageList[selectedRoom].length
     : null;
-
   const scrollToBottom = () => {
     ref.current.scrollTop = ref.current.scrollHeight;
   };

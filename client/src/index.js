@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./stylesheets/index.css";
@@ -7,11 +6,11 @@ import { Provider } from "react-redux";
 
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import logger from "redux-logger";
+//import logger from "redux-logger";
 import promise from "redux-promise-middleware";
 import rootReducer from "./reducers";
 require("dotenv").config();
-const apply = applyMiddleware(promise, thunk, logger);
+const apply = applyMiddleware(promise, thunk);
 const all = compose(
   apply,
   window.__REDUX_DEVTOOLS_EXTENSION__

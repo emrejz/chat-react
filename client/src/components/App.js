@@ -48,10 +48,8 @@ function App() {
   const [connectedSocket, setConnectedSocket] = useState(false);
 
   useEffect(() => {
-    console.log("Useefecttttttttttttttttttt");
     let { messageList, socket, user: thisUser } = store.socketReducer;
     if (thisUser && newMsgUser && thisUser.username !== newMsgUser.username) {
-      console.log("audio");
       setNewMsgUser(null);
       audio.play();
     }
@@ -78,7 +76,9 @@ function App() {
       });
       socket.on("newMessage", data => {
         const { message, roomName, user } = data;
-        setNewMsgUser(user);
+        if (!newMsgUser) {
+          setNewMsgUser(user);
+        }
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
@@ -100,16 +100,16 @@ function App() {
     }
     if (
       (store.signInReducer.data && store.signInReducer.data.user) ||
-      (store.signUpReducer.data && store.signUpReducer.data.user)
+      (store.signUpReducer.data && store.signUpReducer.data.user) ||
+      (store.signInSocialReducer.data && store.signInSocialReducer.data.user)
     ) {
       store.signInReducer.data = {};
       store.signUpReducer.data = {};
+      store.signInSocialReducer.data = {};
       dispatch(setSocket(null));
     }
   });
-  useEffect(() => {
-    console.log(newMsgUser);
-  }, [newMsgUser]);
+
   return <Root user={store.socketReducer.user} />;
 }
 export default App;

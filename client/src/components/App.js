@@ -101,11 +101,11 @@ function App() {
     if (
       (store.signInReducer.data && store.signInReducer.data.user) ||
       (store.signUpReducer.data && store.signUpReducer.data.user) ||
-      (store.signInSocialReducer.data && store.signInSocialReducer.data.user)
+      (store.signSocialReducer.data && store.signSocialReducer.data.user)
     ) {
       store.signInReducer.data = {};
       store.signUpReducer.data = {};
-      store.signInSocialReducer.data = {};
+      store.signSocialReducer.data = {};
       dispatch(setSocket(null));
     }
   });

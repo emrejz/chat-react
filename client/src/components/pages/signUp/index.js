@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUpActionLocal } from "../../../actions/signAction";
+import ErrorMessage from "../../ErrorMessage";
+import SignWithGoogle from "../../SignWithGoogle";
 
 const SignIn = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
   const dispatch = useDispatch();
-  const signUpReducer = useSelector(state => state.signUpReducer);
+
   const classes = useStyles();
 
   const onSubmit = e => {
@@ -21,13 +23,6 @@ const SignIn = props => {
 
   return (
     <Container maxWidth="sm">
-      {signUpReducer.error.message || signUpReducer.data.error ? (
-        <div className={classes.errorMessage}>
-          {signUpReducer.error.message || signUpReducer.data.error}
-        </div>
-      ) : (
-        ""
-      )}
       <form
         onSubmit={e => onSubmit(e)}
         className={classes.root}
@@ -83,13 +78,9 @@ const SignIn = props => {
         OR
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <a
-          className={"googleButton"}
-          href={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-        >
-          GOOGLE
-        </a>
+        <SignWithGoogle />
       </div>
+      <ErrorMessage signup={true} />
     </Container>
   );
 };
@@ -125,7 +116,7 @@ const useStyles = makeStyles({
     // padding: 10,
     border: "2px solid white",
     borderRadius: 4,
-    marginTop: "120px",
+    marginTop: "60px",
     display: "flex",
     width: "40vw",
     minWidth: "200px",
@@ -139,13 +130,5 @@ const useStyles = makeStyles({
 
     fontSize: 16,
     alignSelf: "center"
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "60px",
-    textAlign: "center",
-    marginBottom: "-86px",
-    fontSize: "22px",
-    fontFamily: "monospace"
   }
 });

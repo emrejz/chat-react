@@ -19,7 +19,7 @@ export const SIGNIN_SOCIAL_REJECTED = "SIGNIN_SOCIAL_REJECTED";
 const SIGNIN_LOCAL = "SIGNIN_LOCAL";
 const SIGNUP_LOCAL = "SIGNUP_LOCAL";
 const SIGNOUT_ALL = "SIGNOUT_ALL";
-const SIGN_SOCIAL = "SIGN_SOCIAL";
+const SIGNIN_SOCIAL = "SIGNIN_SOCIAL";
 export const signInActionLocal = data => dispatch => {
   dispatch({
     type: SIGNIN_LOCAL,
@@ -53,9 +53,9 @@ export const signOutAction = () => dispatch => {
 };
 export const signGoogleAction = user => dispatch => {
   dispatch({
-    type: SIGN_SOCIAL,
+    type: SIGNIN_SOCIAL,
     payload: axios
-      .get(process.env.REACT_APP_PROD_SERVER_URL + "isSocial", user, {
+      .post(process.env.REACT_APP_PROD_SERVER_URL + "isSocial", user, {
         withCredentials: true
       })
       .then(res => res.data)

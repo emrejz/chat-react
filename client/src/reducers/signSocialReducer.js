@@ -9,7 +9,7 @@ const initState = {
   fetching: false,
   fetched: false
 };
-const signInSocialReducer = (state = initState, { type, payload }) => {
+const signSocialReducer = (state = initState, { type, payload }) => {
   switch (type) {
     case SIGNIN_SOCIAL_PENDING:
       return {
@@ -34,4 +34,4 @@ const signInSocialReducer = (state = initState, { type, payload }) => {
       return state;
   }
 };
-export default signInSocialReducer;
+export default signSocialReducer;

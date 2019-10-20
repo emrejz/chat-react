@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInActionLocal } from "../../../actions/signAction";
 import SignWithGoogle from "../../SignWithGoogle";
+import ErrorMessage from "../../ErrorMessage";
 
 const SignIn = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
-  const signInReducer = useSelector(state => state.signInReducer);
   const onSubmit = e => {
     e.preventDefault();
     if (username.length > 0 && password.length > 0) {
@@ -26,13 +26,6 @@ const SignIn = props => {
 
   return (
     <Container maxWidth="sm">
-      {signInReducer.error.message || signInReducer.data.error ? (
-        <div className={classes.errorMessage}>
-          {signInReducer.error.message || signInReducer.data.error}
-        </div>
-      ) : (
-        ""
-      )}
       <form onSubmit={e => onSubmit(e)} className={classes.root}>
         <CssTextField
           style={{ marginTop: 0 }}
@@ -75,6 +68,7 @@ const SignIn = props => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <SignWithGoogle />
       </div>
+      <ErrorMessage signin={true} />
     </Container>
   );
 };
@@ -110,7 +104,7 @@ const useStyles = makeStyles({
     // padding: 10,
     border: "2px solid white",
     borderRadius: 4,
-    marginTop: "120px",
+    marginTop: "90px",
     display: "flex",
     width: "40vw",
     minWidth: 200,
@@ -124,13 +118,5 @@ const useStyles = makeStyles({
 
     fontSize: 16,
     alignSelf: "center"
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "60px",
-    textAlign: "center",
-    marginBottom: "-86px",
-    fontSize: "22px",
-    fontFamily: "monospace"
   }
 });

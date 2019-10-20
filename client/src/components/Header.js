@@ -37,7 +37,7 @@ const Header = props => {
 
   return (
     <React.Fragment>
-      {user === null || user.logged_in === false ? (
+      {user && user.logged_in === false ? (
         <AppBar className={classes.root} position="static">
           <Toolbar>
             <div className={classes.title}>

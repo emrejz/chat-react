@@ -1,6 +1,5 @@
 import React from "react";
 import { DotLoader } from "react-spinners";
-import { height } from "@material-ui/system";
 
 const Loading = () => {
   return (

@@ -4,7 +4,7 @@ import Header from "./Header.js";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import SignIn from "./pages/signIn/";
 import SignUp from "./pages/signUp/";
-import Chat from "./pages/chat";
+import Chat from "./pages/chat/";
 import Home from "./pages/home";
 import Loading from "./pages/loading";
 import io from "socket.io-client";
@@ -46,8 +46,9 @@ function App() {
   const store = useSelector(state => state);
   const [newMsgUser, setNewMsgUser] = useState(null);
   const [connectedSocket, setConnectedSocket] = useState(false);
+
   useEffect(() => {
-    console.log("useEffect");
+    console.log("Useefecttttttttttttttttttt");
     let { messageList, socket, user: thisUser } = store.socketReducer;
     if (thisUser && newMsgUser && thisUser.username !== newMsgUser.username) {
       console.log("audio");
@@ -56,10 +57,11 @@ function App() {
     }
     if (store.signOutReducer.data && store.signOutReducer.data.status) {
       store.signOutReducer.data = {};
+      socket.disconnect();
       dispatch(setSocket(null));
     }
     if (socket && connectedSocket) {
-      setConnectedSocket(false);
+      socket.emit("startEvent");
       socket.on("userInfo", data => {
         dispatch(getUser(data));
         socket.emit("newUser", data);
@@ -80,6 +82,7 @@ function App() {
         messageList[roomName].push({ message, ...user });
         dispatch(roomMessages(messageList));
       });
+      setConnectedSocket(false);
     }
     if (
       !socket &&
@@ -99,13 +102,14 @@ function App() {
       (store.signInReducer.data && store.signInReducer.data.user) ||
       (store.signUpReducer.data && store.signUpReducer.data.user)
     ) {
-      console.log("login logup");
-      store.signOutReducer.data = {};
       store.signInReducer.data = {};
       store.signUpReducer.data = {};
       dispatch(setSocket(null));
     }
   });
+  useEffect(() => {
+    console.log(newMsgUser);
+  }, [newMsgUser]);
   return <Root user={store.socketReducer.user} />;
 }
 export default App;

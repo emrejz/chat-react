@@ -7,12 +7,12 @@ import {
   makeStyles,
   ListItemText
 } from "@material-ui/core/";
-import defaultImg from "../../../assets/uniSex.jpg";
+import defaultImg from "../../../../assets/uniSex.jpg";
 
 const ListItemCustom = ({ stranger, item }) => {
   const classes = useStyles();
   return (
-    <div  >
+    <div>
       <ListItem
         className={stranger ? classes.strangerMessage : classes.myMessage}
         alignItems="flex-start"

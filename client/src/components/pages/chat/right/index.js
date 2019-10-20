@@ -4,12 +4,14 @@ import ChatPanel from "./ChatPanel";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { Paper } from "@material-ui/core/";
+import ButtonCustom from "../ButtonCustom";
 
 export default function RightPaper() {
   const classes = useStyles();
   const { selectedRoom } = useSelector(state => state.socketReducer);
   return (
     <Paper className={classes.paper}>
+      <ButtonCustom signOut={true} />
       <div className={classes.namePanel}>
         {selectedRoom
           ? "Chat room name is " + selectedRoom
@@ -33,6 +35,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: "white",
+    position: "relative",
     height: "80vh"
   },
   namePanel: {

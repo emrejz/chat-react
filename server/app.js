@@ -29,7 +29,7 @@ app.use(
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect(process.env.DB_URL_MLAB, {
     useNewUrlParser: true,
     useCreateIndex: true
   })

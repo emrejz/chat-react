@@ -1,6 +1,6 @@
 import React, { useEffect, createRef } from "react";
 import { useSelector } from "react-redux";
-import ListItemCustom from "./ListItemCustom";
+import MessageListItem from "./MessageListItem";
 
 export default function ChatPanel() {
   const { messageList, user, selectedRoom } = useSelector(
@@ -32,9 +32,9 @@ export default function ChatPanel() {
         messageList[selectedRoom] &&
         messageList[selectedRoom].map(item => {
           return item.username !== user.username ? (
-            <ListItemCustom item={item} stranger={true} key={item.when} />
+            <MessageListItem item={item} stranger={true} key={item.when} />
           ) : (
-            <ListItemCustom item={item} stranger={false} key={item.when} />
+            <MessageListItem item={item} stranger={false} key={item.when} />
           );
         })}
     </div>

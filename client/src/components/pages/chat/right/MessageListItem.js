@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core/";
 import defaultImg from "../../../../assets/uniSex.jpg";
 
-const ListItemCustom = ({ stranger, item }) => {
+const MessageListItem = ({ stranger, item }) => {
   const classes = useStyles();
   return (
     <div>
@@ -55,7 +55,7 @@ const ListItemCustom = ({ stranger, item }) => {
   );
 };
 
-export default ListItemCustom;
+export default MessageListItem;
 const useStyles = makeStyles(theme => ({
   inlineMe: {
     display: "block",
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   strangerMessage: {
     flex: 1,
     float: "left",
-    //   maxWidth: "88%",
+    maxWidth: "88%",
     color: "white",
     backgroundColor: "crimson",
     borderRadius: 8,

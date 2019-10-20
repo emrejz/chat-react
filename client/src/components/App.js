@@ -9,7 +9,7 @@ import Home from "./pages/home";
 import Loading from "./pages/loading";
 import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
-import fart from "../assets/fart.mp3";
+import msgNotification from "../assets/msgNotification.mp3";
 import {
   getUser,
   onlineList,
@@ -42,7 +42,7 @@ const Root = user => {
 };
 function App() {
   const dispatch = useDispatch();
-  const [audio] = useState(new Audio(fart));
+  const [audio] = useState(new Audio(msgNotification));
   const store = useSelector(state => state);
   const [newMsgUser, setNewMsgUser] = useState(null);
   const [connectedSocket, setConnectedSocket] = useState(false);

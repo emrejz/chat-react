@@ -21,22 +21,25 @@ export default function ChatPanel() {
       style={{
         height: "60vh",
         backgroundColor: "#fbf9ed",
-        overflowY: "auto",
-        display: "flex",
-        flexDirection: "column",
-        flex: 1
+        overflow: "hidden"
       }}
-      ref={ref}
     >
-      {user &&
-        messageList[selectedRoom] &&
-        messageList[selectedRoom].map(item => {
-          return item.username !== user.username ? (
-            <MessageListItem item={item} stranger={true} key={item.when} />
-          ) : (
-            <MessageListItem item={item} stranger={false} key={item.when} />
-          );
-        })}
+      <div
+        className="scrollbar"
+        id="style-13"
+        style={{ display: "flex", flexDirection: "column", flex: 1 }}
+        ref={ref}
+      >
+        {user &&
+          messageList[selectedRoom] &&
+          messageList[selectedRoom].map(item => {
+            return item.username !== user.username ? (
+              <MessageListItem item={item} stranger={true} key={item.when} />
+            ) : (
+              <MessageListItem item={item} stranger={false} key={item.when} />
+            );
+          })}
+      </div>
     </div>
   );
 }

@@ -47,7 +47,6 @@ function App() {
   const store = useSelector(state => state);
   const [newMsgUser, setNewMsgUser] = useState(null);
   const [connectedSocket, setConnectedSocket] = useState(false);
-
   useEffect(() => {
     let { messageList, socket, user: thisUser } = store.socketReducer;
     if (thisUser && newMsgUser && thisUser.username !== newMsgUser.username) {

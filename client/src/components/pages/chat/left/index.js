@@ -25,24 +25,27 @@ export default function LeftPaper() {
         <ButtonCustom online={true} setTabID={setTabID} />
         <ButtonCustom rooms={true} setTabID={setTabID} />
         <div className={classes.root}>
-          {tabID === 0 ? (
-            <React.Fragment>
-              {onlineList.map(item => (
-                <OnlineUserItem item={item} key={item.username} />
-              ))}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {roomList.map(item => (
-                <RoomItem
-                  item={item}
-                  key={item.name}
-                  selectRoomButton={selectRoomButton}
-                />
-              ))}
-            </React.Fragment>
-          )}
+          <div className="scrollbar" id="style-13">
+            {tabID === 0 ? (
+              <React.Fragment>
+                {onlineList.map(item => (
+                  <OnlineUserItem item={item} key={item.username} />
+                ))}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {roomList.map(item => (
+                  <RoomItem
+                    item={item}
+                    key={item.name}
+                    selectRoomButton={selectRoomButton}
+                  />
+                ))}
+              </React.Fragment>
+            )}
+          </div>
         </div>
+
         <div className={classes.addRoomBtnCont}>
           <ButtonCustom addRoom={true} />
         </div>
@@ -60,13 +63,11 @@ const useStyles = makeStyles(theme => ({
     height: "80vh"
   },
   root: {
-    marginTop: 20,
-    overflowY: "auto",
-    overflowX: "hidden",
+    marginTop: 10,
+    overflow: "hidden",
     width: "100%",
-    height: "63vh",
-    maxWidth: 400,
-    backgroundColor: theme.palette.background.paper
+    height: "70%",
+    backgroundColor: "white"
   },
   addRoomBtnCont: {
     position: "absolute ",

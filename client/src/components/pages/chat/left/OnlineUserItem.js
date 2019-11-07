@@ -37,9 +37,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 10,
     borderBottom: "inset",
     "&:hover": {
-      width: "auto !important",
-      minWidth: "16% ",
-      position: "fixed",
+      width: "100% !important",
       textDecoration: "none",
       backgroundColor: "greenyellow",
       fontSize: "20px",

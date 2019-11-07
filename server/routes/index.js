@@ -4,24 +4,32 @@ const passport = require("../auth/index");
 const socialAuth = require("../helpers/socialAuth");
 
 router.post("/signup", function(req, res, next) {
-  passport.authenticate("local-signup", (error, user) => {
+  passport.authenticate("local-signup", (err, user) => {
     if (user)
       req.logIn(user, error => {
         if (error) return res.json({ error });
         else return res.json({ user });
       });
-    if (error) res.json({ error });
+    if (err) {
+      let error = { message: err };
+      req.logout();
+      return res.json({ error });
+    }
   })(req, res, next);
 });
 
 router.post("/signin", (req, res, next) => {
-  passport.authenticate("local-signin", (error, user) => {
+  passport.authenticate("local-signin", (err, user) => {
     if (user)
       req.logIn(user, error => {
         if (error) return res.json({ error });
         else return res.json({ user });
       });
-    if (error) res.json({ error });
+    if (err) {
+      let error = { message: err };
+      req.logout();
+      return res.json({ error });
+    }
   })(req, res, next);
 });
 router.get(
@@ -49,8 +57,9 @@ router.post("/isSocial", async (req, res) => {
       if (error) return res.json({ error });
       else return res.json({ user });
     });
-  } catch (error) {
-    return res.json(error);
+  } catch (err) {
+    let error = { message: err };
+    return res.json({ error });
   }
 });
 module.exports = router;

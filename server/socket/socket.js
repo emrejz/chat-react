@@ -31,20 +31,24 @@ module.exports = server => {
         });
         socket.emit("userInfo", user);
         socket.on("addRoom", roomName => {
-          if (roomList.length == 0) {
-            Rooms.upsert(roomName);
-            Rooms.getList(rooms => {
-              io.emit("newRoom", rooms);
-            });
-          }
-          for (let room of roomList) {
-            if (room.name !== roomName) {
+          Rooms.getList(roomList => {
+            let roomLength = roomList.length;
+            let count = 0;
+            if (roomLength !== 0) {
+              for (let room of roomList) {
+                if (room.name !== roomName) {
+                  count++;
+                  if (roomLength === count) {
+                    Rooms.upsert(roomName);
+                    io.emit("newRoom", { name: roomName, when: Date.now() });
+                  }
+                }
+              }
+            } else {
               Rooms.upsert(roomName);
-              Rooms.getList(rooms => {
-                io.emit("newRoom", rooms);
-              });
+              io.emit("newRoom", roomName);
             }
-          }
+          });
         });
         socket.on("roomMessages", room => {
           socket.join(room);

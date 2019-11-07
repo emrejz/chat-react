@@ -16,7 +16,6 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
       "http://knowing-room.surge.sh",
       "http://chatapp-react.surge.sh",
       "http://chatapp-vue.surge.sh",

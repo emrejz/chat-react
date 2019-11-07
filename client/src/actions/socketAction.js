@@ -10,6 +10,12 @@ export const getRoomList = rooms => {
     payload: rooms
   };
 };
+export const newRoom = room => {
+  return {
+    type: "newRoom",
+    payload: room
+  };
+};
 export const getMessageList = messages => {
   return {
     type: "messageList",

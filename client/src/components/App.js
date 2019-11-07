@@ -15,7 +15,8 @@ import {
   onlineList,
   getRoomList,
   setSocket,
-  roomMessages
+  roomMessages,
+  newRoom
 } from "../actions/socketAction";
 const Root = user => {
   return (
@@ -66,7 +67,7 @@ function App() {
       });
       socket.on("roomList", data => dispatch(getRoomList(data)));
       socket.on("newRoom", data => {
-        dispatch(getRoomList(data));
+        dispatch(newRoom(data));
       });
       socket.on("roomMesasges", messages => {
         dispatch(roomMessages(Object.assign(messageList, messages)));
@@ -93,7 +94,7 @@ function App() {
         setSocket(
           io(process.env.REACT_APP_PROD_SERVER_URL, {
             transports: ["websocket"]
-          })
+          }).emit("startEmit")
         )
       );
       setConnectedSocket(true);

@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 
 const ErrorMessage = ({ signin, signup }) => {
   const store = useSelector(state => state);
-
+  let {
+    signInReducer: { error: signInError, data: signInData },
+    signUpReducer: { error: signUpError, data: signUpData },
+    signSocialReducer: { error: signSocialError, data: signSocialData }
+  } = store;
   return (
     <div
       style={{
@@ -16,13 +20,13 @@ const ErrorMessage = ({ signin, signup }) => {
       }}
     >
       {signin
-        ? store.signInReducer.error.message || store.signInReducer.data.error
+        ? signInError.message || (signInData.error && signInData.error.message)
         : ""}
       {signup
-        ? store.signUpReducer.error.message || store.signUpReducer.data.error
+        ? signUpError.message || (signUpData.error && signUpData.error.message)
         : ""}
-      {store.signSocialReducer.error.message ||
-        store.signSocialReducer.data.error}
+      {signSocialError.message ||
+        (signSocialData.error && signSocialData.error.message)}
     </div>
   );
 };

@@ -25,6 +25,8 @@ const socketReducer = (state = initState, { type, payload }) => {
       return { ...state, socket: payload, user: null };
     case "roomMessages":
       return { ...state, messageList: payload };
+    case "newRoom":
+      return { ...state, roomList: [...state.roomList, payload] };
     default:
       return state;
   }

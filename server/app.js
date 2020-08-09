@@ -16,24 +16,26 @@ const app = express();
 app.use(
   cors({
     origin: [
+      "http://localhost:3000", //react dev
+      "http://localhost:4200", //angular dev
       "http://knowing-room.surge.sh",
       "http://chatapp-react.surge.sh",
       "http://chatapp-vue.surge.sh",
-      "http://chatapp-angular.surge.sh"
+      "http://chatapp-angular.surge.sh",
     ],
     credentials: true,
-    preflightContinue: true
+    preflightContinue: true,
   })
 );
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(process.env.DB_URL_MLAB, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
   })
-  .then(res => console.log("mongo ok"))
-  .catch(err => console.log("mongo err"));
+  .then((res) => console.log("mongo ok"))
+  .catch((err) => console.log("mongo err"));
 app.set("view engine", "pug");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,8 +52,8 @@ app.use(
       secure: false,
       httpOnly: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: false
-    }
+      sameSite: false,
+    },
   })
 );
 app.use(passport.initialize());

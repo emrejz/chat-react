@@ -1,16 +1,18 @@
 import React from "react";
-import { signGoogleAction } from "../actions/signAction";
 import { useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
+
+import { signGoogleAction } from "../store/actions/signAction";
+
 const SignWithGoogle = () => {
   const dispatch = useDispatch();
-  const responseGoogle = res => {
+  const responseGoogle = (res) => {
     let { profileObj } = res;
     if (profileObj) {
       dispatch(
         signGoogleAction({
           email: profileObj.email,
-          picture: profileObj.imageUrl
+          picture: profileObj.imageUrl,
         })
       );
     }

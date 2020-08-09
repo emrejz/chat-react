@@ -7,15 +7,15 @@ const InputMessage = () => {
   const classes = useStyles();
   const [text, setText] = React.useState("");
 
-  const { selectedRoom, socket } = useSelector(state => state.socketReducer);
+  const { selectedRoom, socket } = useSelector((state) => state.socketReducer);
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         const message = text.trim();
         if (message) {
-          socket.emit("newMessage", { message, selectedRoom });
+          socket.emit("newMessage", message);
         }
         setText("");
       }}
@@ -24,7 +24,7 @@ const InputMessage = () => {
       {selectedRoom ? (
         <TextField
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           id="outlined-full-width"
           label="Your Message"
           placeholder="enter message"
@@ -32,12 +32,12 @@ const InputMessage = () => {
           autoSave="false"
           margin="normal"
           style={{
-            margin: 0
+            margin: 0,
           }}
           fullWidth
           variant="outlined"
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
         />
       ) : (
@@ -47,10 +47,10 @@ const InputMessage = () => {
   );
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   inputPanel: {
     marginTop: 16,
-    height: "14vh"
-  }
+    height: "14vh",
+  },
 }));
 export default InputMessage;

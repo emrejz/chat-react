@@ -1,12 +1,13 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core/";
 import { useSelector, useDispatch } from "react-redux";
-import { signOutAction } from "../../../actions/signAction";
+
+import { signOutAction } from "../../store/actions/signAction";
 
 const SignOutButton = ({ online, rooms, addRoom, signOut, setTabID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { socket } = useSelector(state => state.socketReducer);
+  const { socket } = useSelector((state) => state.socketReducer);
   const addRoomButton = () => {
     let roomName = prompt("Enter room name.");
     if (roomName) {
@@ -18,6 +19,7 @@ const SignOutButton = ({ online, rooms, addRoom, signOut, setTabID }) => {
   };
   const signOutFun = () => {
     dispatch(signOutAction());
+    window.location.reload();
   };
   return (
     <React.Fragment>
@@ -63,21 +65,21 @@ const SignOutButton = ({ online, rooms, addRoom, signOut, setTabID }) => {
     </React.Fragment>
   );
 };
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   signOut: {
     position: "absolute",
     top: "-50px",
-    right: 0
+    right: 0,
   },
   buttons: {
     margin: 4,
-    padding: 2
+    padding: 2,
   },
   addRoomBtn: {
     color: "green",
     padding: 2,
     marginRight: 10,
-    borderColor: "green"
-  }
+    borderColor: "green",
+  },
 }));
 export default SignOutButton;

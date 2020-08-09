@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-
 import { useDispatch } from "react-redux";
-import { signUpActionLocal } from "../../../actions/signAction";
-import ErrorMessage from "../../ErrorMessage";
-import SignWithGoogle from "../../SignWithGoogle";
 
-const SignIn = props => {
+import { signUpActionLocal } from "../../store/actions/signAction";
+import ErrorMessage from "../../components/ErrorMessage";
+import SignWithGoogle from "../../components/SignWithGoogle";
+
+const SignIn = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
@@ -15,7 +15,7 @@ const SignIn = props => {
 
   const classes = useStyles();
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (password === passwordC)
       dispatch(signUpActionLocal({ username, password }));
@@ -24,7 +24,7 @@ const SignIn = props => {
   return (
     <Container maxWidth="sm">
       <form
-        onSubmit={e => onSubmit(e)}
+        onSubmit={(e) => onSubmit(e)}
         className={classes.root}
         disabled={true}
       >
@@ -35,7 +35,7 @@ const SignIn = props => {
           id="email"
           required
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           type="text"
         />
         <CssTextField
@@ -45,7 +45,7 @@ const SignIn = props => {
           required
           error={password !== passwordC}
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           type="password"
         />
         <CssTextField
@@ -55,7 +55,7 @@ const SignIn = props => {
           required
           error={password !== passwordC}
           value={passwordC}
-          onChange={e => setPasswordC(e.target.value)}
+          onChange={(e) => setPasswordC(e.target.value)}
           type="password"
         />
         <Button
@@ -72,7 +72,7 @@ const SignIn = props => {
           textAlign: "center",
           marginBottom: 10,
           marginTop: 14,
-          color: "white"
+          color: "white",
         }}
       >
         OR
@@ -93,21 +93,21 @@ const CssTextField = withStyles({
     backgroundColor: "white",
     overFlow: "hidden",
     "& label.Mui-focused": {
-      color: "green"
+      color: "green",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "green"
+      borderBottomColor: "green",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderWidth: 2,
-        borderColor: "black"
+        borderColor: "black",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
-  }
+        borderColor: "green",
+      },
+    },
+  },
 })(TextField);
 const useStyles = makeStyles({
   root: {
@@ -121,7 +121,7 @@ const useStyles = makeStyles({
     width: "40vw",
     minWidth: "200px",
     flexWrap: "nowrap",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   button: {
     marginTop: 10,
@@ -129,6 +129,6 @@ const useStyles = makeStyles({
     width: 200,
 
     fontSize: 16,
-    alignSelf: "center"
-  }
+    alignSelf: "center",
+  },
 });

@@ -5,9 +5,10 @@ import {
   ListItemAvatar,
   Typography,
   makeStyles,
-  ListItemText
+  ListItemText,
 } from "@material-ui/core/";
-import defaultImg from "../../../../assets/uniSex.jpg";
+
+import defaultImg from "../../../assets/uniSex.jpg";
 
 const MessageListItem = ({ stranger, item }) => {
   const classes = useStyles();
@@ -56,18 +57,18 @@ const MessageListItem = ({ stranger, item }) => {
 };
 
 export default MessageListItem;
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   inlineMe: {
     display: "block",
     color: "white",
     fontSize: 16,
-    borderTop: "1px solid"
+    borderTop: "1px solid",
   },
   inlineStr: {
     display: "block",
     color: "white",
     borderTop: "1px solid",
-    fontSize: 16
+    fontSize: 16,
   },
   strangerMessage: {
     flex: 1,
@@ -77,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "crimson",
     borderRadius: 8,
     marginBottom: 10,
-    marginLeft: 4
+    marginLeft: 4,
   },
 
   myMessage: {
@@ -88,11 +89,11 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 8,
     textAlign: "right",
     marginBottom: 10,
-    marginRight: 4
+    marginRight: 4,
   },
   avatar: {
     [theme.breakpoints.down("xs")]: {
-      display: "none"
-    }
-  }
+      display: "none",
+    },
+  },
 }));

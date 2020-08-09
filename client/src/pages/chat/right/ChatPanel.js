@@ -1,10 +1,11 @@
 import React, { useEffect, createRef } from "react";
 import { useSelector } from "react-redux";
+
 import MessageListItem from "./MessageListItem";
 
 export default function ChatPanel() {
   const { messageList, user, selectedRoom } = useSelector(
-    state => state.socketReducer
+    (state) => state.socketReducer
   );
   const ref = createRef();
   const leng = messageList[selectedRoom]
@@ -21,7 +22,7 @@ export default function ChatPanel() {
       style={{
         height: "60vh",
         backgroundColor: "#fbf9ed",
-        overflow: "hidden"
+        overflow: "hidden",
       }}
     >
       <div
@@ -32,7 +33,7 @@ export default function ChatPanel() {
       >
         {user &&
           messageList[selectedRoom] &&
-          messageList[selectedRoom].map(item => {
+          messageList[selectedRoom].map((item) => {
             return item.username !== user.username ? (
               <MessageListItem item={item} stranger={true} key={item.when} />
             ) : (

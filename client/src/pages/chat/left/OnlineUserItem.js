@@ -3,9 +3,10 @@ import {
   makeStyles,
   ListItem,
   ListItemAvatar,
-  Avatar
+  Avatar,
 } from "@material-ui/core/";
-import defaultImg from "../../../../assets/uniSex.jpg";
+
+import defaultImg from "../../../assets/uniSex.jpg";
 
 const OnlineUserItem = ({ item }) => {
   const classes = useStyles();
@@ -26,10 +27,10 @@ const OnlineUserItem = ({ item }) => {
 
 export default OnlineUserItem;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
-    height: "56px"
+    height: "56px",
   },
   listItem: {
     transition: ".2s ease",
@@ -43,7 +44,7 @@ const useStyles = makeStyles(theme => ({
       fontSize: "20px",
       transition: ".2s ease",
       borderRadius: "0px 20px 20px 0px",
-      borderBottom: "none"
-    }
-  }
+      borderBottom: "none",
+    },
+  },
 }));

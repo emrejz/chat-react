@@ -4,34 +4,35 @@ const socketAuth = require("../auth/socket");
 const Rooms = require("../redis/lib/Rooms");
 const Users = require("../redis/lib/Users");
 const Messages = require("../redis/lib/Messages");
-module.exports = server => {
+module.exports = (server) => {
   const io = socket.listen(server);
   let roomList = [];
   io.use(socketAuth);
   io.adapter(
     redisAdapter({
-      url: process.env.REDISCLOUD_URL
-      // host: process.env.REDIS_HOST,
-      // port: process.env.REDIS_PORT,
-      // auth_pass: process.env.REDIS_PASS
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
+      auth_pass: process.env.REDIS_PASS,
     })
   );
-  io.on("connection", socket => {
+  io.on("connection", (socket) => {
+    let currentRoom = null;
     let { user } = socket.request;
+
     if (user.username) {
       socket.on("startEvent", () => {
         user.password = "";
-        Rooms.getList(rooms => {
+        Rooms.getList((rooms) => {
           io.emit("roomList", rooms);
           roomList = rooms;
         });
         Users.upsert(user);
-        Users.getList(users => {
+        Users.getList((users) => {
           io.emit("onlineList", users);
         });
         socket.emit("userInfo", user);
-        socket.on("addRoom", roomName => {
-          Rooms.getList(roomList => {
+        socket.on("addRoom", (roomName) => {
+          Rooms.getList((roomList) => {
             let roomLength = roomList.length;
             let count = 0;
             if (roomLength !== 0) {
@@ -50,29 +51,32 @@ module.exports = server => {
             }
           });
         });
-        socket.on("roomMessages", room => {
-          socket.join(room);
-          Messages.getList(room, messages => {
-            let msgList = {};
-            msgList[room] = messages;
-            socket.emit("roomMesasges", msgList);
-          });
+        socket.on("roomMessages", (room) => {
+          currentRoom && socket.leave(currentRoom);
+          currentRoom = room;
+          if (room) {
+            socket.join(room);
+            Messages.getList(room, (messages) => {
+              let msgList = {};
+              msgList[room] = messages;
+              socket.emit("roomMesasges", msgList);
+            });
+          }
         });
-        socket.on("newMessage", data => {
-          const { message, selectedRoom } = data;
+        socket.on("newMessage", (message) => {
           const msgData = {
             message,
-            roomName: selectedRoom,
+            roomName: currentRoom,
             when: Date.now(),
-            user: { username: user.username, picture: user.picture }
+            user: { username: user.username, picture: user.picture },
           };
           Messages.upsert(msgData);
-          io.to(selectedRoom).emit("newMessage", msgData);
+          io.to(currentRoom).emit("newMessage", msgData);
         });
-        socket.on("newUser", newUser => (user = newUser));
+        socket.on("newUser", (newUser) => (user = newUser));
         socket.on("disconnect", () => {
           Users.remove(user);
-          Users.getList(users => io.emit("onlineList", users));
+          Users.getList((users) => io.emit("onlineList", users));
         });
       });
     } else {

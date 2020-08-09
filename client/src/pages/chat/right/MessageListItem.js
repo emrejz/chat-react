@@ -32,6 +32,7 @@ const MessageListItem = ({ stranger, item }) => {
           secondary={
             <React.Fragment>
               <Typography
+                key={item.when}
                 component="span"
                 variant="body2"
                 className={classes.inlineStr}

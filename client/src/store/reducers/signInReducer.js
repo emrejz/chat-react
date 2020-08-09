@@ -1,34 +1,34 @@
 import {
   SIGNIN_LOCAL_PENDING,
   SIGNIN_LOCAL_FULFILLED,
-  SIGNIN_LOCAL_REJECTED
+  SIGNIN_LOCAL_REJECTED,
 } from "../actions/signAction";
 const initState = {
   data: {},
   error: {},
   fetching: false,
-  fetched: false
+  fetched: false,
 };
 const signInReducer = (state = initState, { type, payload }) => {
   switch (type) {
     case SIGNIN_LOCAL_PENDING:
       return {
         ...state,
-        fetching: true
+        fetching: true,
       };
     case SIGNIN_LOCAL_FULFILLED:
       return {
         ...state,
         fetching: false,
         fetched: true,
-        data: payload
+        data: payload,
       };
     case SIGNIN_LOCAL_REJECTED:
       return {
         ...state,
         fetching: false,
         fetched: false,
-        error: payload
+        error: payload,
       };
     default:
       return state;

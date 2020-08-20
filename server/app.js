@@ -13,6 +13,7 @@ const indexRouter = require("./routes/index");
 const socket = require("./socket/socket");
 
 const app = express();
+
 app.use(
   cors({
     origin: [
@@ -24,7 +25,6 @@ app.use(
       "http://chatapp-angular.surge.sh",
     ],
     credentials: true,
-    preflightContinue: true,
   })
 );
 mongoose.Promise = global.Promise;
@@ -33,14 +33,17 @@ mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useUnifiedTopology: true,
   })
   .then((res) => console.log("mongo ok"))
   .catch((err) => console.log("mongo err"));
+app.enable("trust proxy");
 app.set("view engine", "pug");
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 app.use(
   session({
     key: "connect.sid",
@@ -49,10 +52,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
-      httpOnly: false,
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: false,
+      sameSite: "none",
     },
   })
 );

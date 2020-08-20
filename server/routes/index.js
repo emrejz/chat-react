@@ -3,10 +3,10 @@ const router = express.Router();
 const passport = require("../auth/index");
 const socialAuth = require("../helpers/socialAuth");
 
-router.post("/signup", function(req, res, next) {
+router.post("/signup", function (req, res, next) {
   passport.authenticate("local-signup", (err, user) => {
     if (user)
-      req.logIn(user, error => {
+      req.logIn(user, (error) => {
         if (error) return res.json({ error });
         else return res.json({ user });
       });
@@ -21,7 +21,7 @@ router.post("/signup", function(req, res, next) {
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local-signin", (err, user) => {
     if (user)
-      req.logIn(user, error => {
+      req.logIn(user, (error) => {
         if (error) return res.json({ error });
         else return res.json({ user });
       });
@@ -40,20 +40,21 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/auth/google" }),
-  function(req, res) {
+  function (req, res) {
     // TODO RES REDIRECT REQ.URL
     res.json({ status: "okkk" });
   }
 );
 router.get("/signout", (req, res) => {
   req.logout();
+  req.session.destroy();
   res.json({ status: true });
 });
 router.post("/isSocial", async (req, res) => {
   const data = req.body;
   try {
     const user = await socialAuth(data);
-    req.logIn(user, error => {
+    req.logIn(user, (error) => {
       if (error) return res.json({ error });
       else return res.json({ user });
     });

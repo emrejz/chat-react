@@ -1,5 +1,6 @@
-var session = require("express-session");
-var RedisStore = require("connect-redis")(session);
+const session = require("express-session");
+const RedisStore = require("connect-redis")(session);
+const redis = require("redis");
 const opt = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
@@ -7,10 +8,9 @@ const opt = {
 };
 
 module.exports = new RedisStore({
-  // client: redis,
+  client: redis.createClient({ ...opt }),
+  //disableTouch: true,
   // //serializer: true,
-  // unset: "destroy"
-
   secret: process.env.SECRET_KEY,
-  ...opt,
+  // ...opt,
 });

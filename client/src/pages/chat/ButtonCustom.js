@@ -17,8 +17,8 @@ const SignOutButton = ({ online, rooms, addRoom, signOut, setTabID }) => {
       }
     }
   };
-  const signOutFun = () => {
-    dispatch(signOutAction());
+  const signOutFun = async () => {
+    await dispatch(signOutAction());
     window.location.reload();
   };
   return (

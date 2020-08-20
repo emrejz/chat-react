@@ -20,44 +20,48 @@ const SIGNIN_LOCAL = "SIGNIN_LOCAL";
 const SIGNUP_LOCAL = "SIGNUP_LOCAL";
 const SIGNOUT_ALL = "SIGNOUT_ALL";
 const SIGNIN_SOCIAL = "SIGNIN_SOCIAL";
-export const signInActionLocal = data => dispatch => {
+export const signInActionLocal = (data) => (dispatch) => {
   dispatch({
     type: SIGNIN_LOCAL,
     payload: axios
       .post(process.env.REACT_APP_PROD_SERVER_URL + "signin", data, {
-        withCredentials: true
+        withCredentials: true,
       })
-      .then(res => res.data)
+      .then((res) => res.data),
   });
 };
 
-export const signUpActionLocal = data => dispatch => {
+export const signUpActionLocal = (data) => (dispatch) => {
   dispatch({
     type: SIGNUP_LOCAL,
     payload: axios
       .post(process.env.REACT_APP_PROD_SERVER_URL + "signup", data, {
-        withCredentials: true
+        withCredentials: true,
       })
-      .then(res => res.data)
+      .then((res) => res.data),
   });
 };
-export const signOutAction = () => dispatch => {
-  dispatch({
-    type: SIGNOUT_ALL,
-    payload: axios
-      .get(process.env.REACT_APP_PROD_SERVER_URL + "signout", {
-        withCredentials: true
-      })
-      .then(res => res.data)
+export const signOutAction = () => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({
+      type: SIGNOUT_ALL,
+      payload: axios
+        .get(process.env.REACT_APP_PROD_SERVER_URL + "signout", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          resolve(res);
+        }),
+    });
   });
-};
-export const signGoogleAction = user => dispatch => {
+
+export const signGoogleAction = (user) => (dispatch) => {
   dispatch({
     type: SIGNIN_SOCIAL,
     payload: axios
       .post(process.env.REACT_APP_PROD_SERVER_URL + "isSocial", user, {
-        withCredentials: true
+        withCredentials: true,
       })
-      .then(res => res.data)
+      .then((res) => res.data),
   });
 };
